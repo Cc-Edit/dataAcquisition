@@ -11,6 +11,14 @@
 8. 实现前端代码异常上报	
 9. 对接口进行改造，使其与后台日志关联起来		未完成
 
+### 使用方式：
+1. clone代码到本地
+2. 修改store.sendUrl为上报接口地址
+3. 修改store.selector输入元素选择器，指定固定id为主动埋点，指定tagName为自动埋点
+4. 如需对输入采集进行过滤，可更改store.acRange来指定，password最好不要进行采集。此处只为示例。
+5. 点击元素默认向上冒泡采集两层，可修改store.acbLength来更改采集层数
+6. 将文件放置在逻辑代码加载之前（支持AMD）
+
 ### 日志：
 2017-04-03 - 实现基本页面访问数据上报
 
@@ -38,21 +46,12 @@
 
 2017-06-23 - 增加performance API统计页面加载时间信息
 
-### 配置参数：
-	 	storeVer     : '1.0.1',     //版本号
-        storeInput   : "ACINPUT",   //输入采集
-        storePage    : "ACPAGE",    //页面采集
-        storeClick   : "ACCLIK",    //点击事件采集
-        storeReqErr  : "ACRERR",    //请求异常采集
-        storeTiming  : "ACTIME",    //页面时间采集
-        storeCodeErr : "ACCERR",    //代码异常采集
+### 可配置参数：
         sendUrl      : "http://localhost:9090/logStash/push",   //log采集地址
         selector     : 'input',     //通过控制输入框的选择器来限定监听范围$("*[id^='qyd_aci']");
         acRange      : ['text','tel','password'],   //输入框采集范围
-        userSha      : 'userSha',   //用户标识
         maxDays      : 5,           //cookie期限
         acblength    : 2,           //点击元素采集层数
-        useStorage   : false        //自动检测是否使用storage，不要手动更改
 ### 数据格式：
 1. 行为数据
 
@@ -112,26 +111,5 @@
 			 "PRDOM"	 : "152",  		//dom解析耗时
 			 "FXHR"	 : "152"  		//第一个请求发起时间
 		}
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+		
+		

@@ -4,19 +4,18 @@
 var dataAcquisition = {
     store:{ //配置项
         storeVer     : '1.0.1',     //版本号
-        storeInput   : "ACINPUT",   //输入采集
-        storePage    : "ACPAGE",    //页面采集
-        storeClick   : "ACCLIK",    //点击事件采集
-        storeReqErr  : "ACRERR",    //请求异常采集
-        storeTiming  : "ACTIME",    //页面时间采集
-        storeCodeErr : "ACCERR",    //代码异常采集
-        sendUrl      : "https://172.16.20.45:80/logStash/push",   //log采集地址
-        //sendUrl    : "http://localhost:9090/logStash/push",   //log采集地址
+        storeInput   : "ACINPUT",   //输入采集标记
+        storePage    : "ACPAGE",    //页面采集标记
+        storeClick   : "ACCLIK",    //点击事件采集标记
+        storeReqErr  : "ACRERR",    //请求异常采集标记
+        storeTiming  : "ACTIME",    //页面时间采集标记
+        storeCodeErr : "ACCERR",    //代码异常采集标记
+        sendUrl      : "http://localhost:9090/logStash/push",   //log采集地址（需配置）
         selector     : 'input',     //通过控制输入框的选择器来限定监听范围$("*[id^='qyd_aci']");
         acRange      : ['text','tel','password'],   //输入框采集范围
         userSha      : 'userSha',   //用户标识
         maxDays      : 5,           //cookie期限
-        acblength    : 2,           //点击元素采集层数
+        acbLength    : 2,           //点击元素采集层数
         useStorage   : false        //自动检测是否使用storage，不要手动更改
     },
     util: { //工具函数
