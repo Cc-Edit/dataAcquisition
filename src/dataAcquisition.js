@@ -145,8 +145,8 @@ var dataAcquisition = {
         $.ajax = function (opts) {
             var errorCallback = opts.error;
             opts.error = function (XMLHttpRequest, textStatus, errorThrown) {
-                dataAcquisition.setAjErrAc(opts.url, XMLHttpRequest, textStatus);
-                errorCallback(XMLHttpRequest, textStatus, errorThrown);
+                dataAcquisition.setAjErrAc(opts, XMLHttpRequest, textStatus);
+                errorCallback && errorCallback(XMLHttpRequest, textStatus, errorThrown);
             };
             _ajax(opts);
         }
@@ -199,6 +199,7 @@ var dataAcquisition = {
             if (_Timing) {
                 var loadAcData = {
                     type: _this.store.storeTiming,
+                    sTme: _this.util.getTimeStr(),
                     path: _this.util.getCookie(_this.store.storePage)
                     //connectEnd : _Timing.connectEnd,     //返回浏览器与服务器之间的连接建立时的Unix毫秒时间戳
                     //connectStart : _Timing.connectStart, //返回HTTP请求开始向服务器发送时的Unix毫秒时间戳
@@ -241,7 +242,7 @@ var dataAcquisition = {
         ACCEdata.push(data);
         this.util.setCookie(this.store.storeCodeErr, JSON.stringify(ACCEdata));
     },
-    setAjErrAc: function (url, xhr, textStatus) {
+    setAjErrAc: function (opts, xhr, textStatus) {
         var storeString = this.util.getCookie(this.store.storeReqErr);
         var ACEdata = this.util.isNullOrEmpty(storeString) ? [] : JSON.parse(storeString);
         var nowStr = this.util.getTimeStr();
@@ -249,7 +250,8 @@ var dataAcquisition = {
             type: this.store.storeReqErr,
             path: this.util.getCookie(this.store.storePage),
             sTme: nowStr,
-            requrl: url,
+            requrl: opts.url,
+            reqData:opts.data,
             readyState: xhr.readyState,  //状态码
             status: xhr.status,
             statusText: xhr.statusText,
