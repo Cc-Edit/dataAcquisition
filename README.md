@@ -1,4 +1,4 @@
-## 前端数据采集上报插件 dataAcquisition.js
+## 前端数据采集上报插件 dataAcquisition.js （求个小星星）
 
 ### 目的：
 1. 实现前端数据上报分析
