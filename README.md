@@ -61,7 +61,7 @@
 					"type":"ACINPUT/ACPAGE/ACCLIK",     //上报数据类型：输入框/页面访问/点击事件
 					"path":"www.domain.com/w/w/w/",   //事件发生的url
 					"eId":"qyd_acb_0_1",				  //事件发生的元素ID	
-					"class":"js_acb_2_0",				  //事件发生的元素class	
+					"className":"js_acb_2_0",				  //事件发生的元素class
 					"sTme":"13000000",				  //事件发生开始时间
 					"eTme":"130020122",				  //事件结束事件							
 					"val":"123,3000:1234,4000:12345",   //事件发生后不同时间元素的值	  		
