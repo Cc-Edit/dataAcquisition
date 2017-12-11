@@ -145,10 +145,10 @@ var dataAcquisition = {
         $.ajax = function (opts) {
             var errorCallback = opts.error;
             opts.error = function (XMLHttpRequest, textStatus, errorThrown) {
-                dataAcquisition.setAjErrAc(opts, XMLHttpRequest, textStatus);
+                dataAcquisition.setAjErrAc(opts, XMLHttpRequest);
                 errorCallback && errorCallback(XMLHttpRequest, textStatus, errorThrown);
             };
-            _ajax(opts);
+            return _ajax(opts);
         }
     },
     bindCodeHook: function () {
@@ -187,7 +187,6 @@ var dataAcquisition = {
                 codeErrData.err = "";
             }
             dataAcquisition.setCodeErrAc(codeErrData);
-            return true;
         }
     },
     setPerformanceAc: function () {
@@ -242,7 +241,7 @@ var dataAcquisition = {
         ACCEdata.push(data);
         this.util.setCookie(this.store.storeCodeErr, JSON.stringify(ACCEdata));
     },
-    setAjErrAc: function (opts, xhr, textStatus) {
+    setAjErrAc: function (opts, xhr) {
         var storeString = this.util.getCookie(this.store.storeReqErr);
         var ACEdata = this.util.isNullOrEmpty(storeString) ? [] : JSON.parse(storeString);
         var nowStr = this.util.getTimeStr();
@@ -255,10 +254,10 @@ var dataAcquisition = {
             readyState: xhr.readyState,  //状态码
             status: xhr.status,
             statusText: xhr.statusText,
-            textStatus: textStatus
+            textStatus: xhr.responseText 
         };
         ACEdata.push(ErrorData);
-        this.util.setCookie(this.store.storeClick, JSON.stringify(ACEdata))
+        this.util.setCookie(this.store.storeReqErr, JSON.stringify(ACEdata))
     },
     setInputAc: function (e) { //输入框操作数据保存
         var storeString = this.util.getCookie(this.store.storeInput);
@@ -276,7 +275,7 @@ var dataAcquisition = {
             inputData.type = this.store.storeInput;
             inputData.path = this.util.getCookie(this.store.storePage);
             inputData.eId = elementId;
-            inputData.class = className;
+            inputData.className = className;
             inputData.val = e.value || e.innerText;
             inputData.sTme = nowStr;
             inputData.eTme = nowStr
@@ -302,7 +301,7 @@ var dataAcquisition = {
             type: this.store.storeClick,
             path: this.util.getCookie(this.store.storePage),
             eId: e.id,
-            class: e.className,
+            className: e.className,
             val: e.value || e.innerText,
             sTme: nowStr,
             eTme: nowStr
@@ -338,7 +337,8 @@ var dataAcquisition = {
         $.ajax({
             type: "POST",
             dataType: "json",
-            data: {uuid: uuid, acData: data},
+            contentType: "application/json",
+            data: JSON.stringify({uuid: uuid, acData: data}),
             url: _this.store.sendUrl
         });
     }
