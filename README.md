@@ -1,5 +1,8 @@
 ## 前端数据采集上报插件 dataAcquisition.js （求个小星星）
 
+### 公告：
+大家在使用过程中有任何需求，或者不满意的点都可以提交上来。
+
 ### 目的：
 1. 实现前端数据上报分析
 2. 实现用户画像建模，轨迹分析
@@ -55,17 +58,17 @@
 1. 行为数据
 
 		{
-			"uuid":"F6A6C801B7197603",        //用户标识，5天有效
-			"acData":[						  //数据集
+			"uuid":"F6A6C801B7197603",                        //用户标识，5天有效
+			"acData":[					  //数据集
 					{
-					"type":"ACINPUT/ACPAGE/ACCLIK",     //上报数据类型：输入框/页面访问/点击事件
+					"type":"ACINPUT/ACPAGE/ACCLIK",   //上报数据类型：输入框/页面访问/点击事件
 					"path":"www.domain.com/w/w/w/",   //事件发生的url
-					"eId":"qyd_acb_0_1",				  //事件发生的元素ID	
-					"className":"js_acb_2_0",				  //事件发生的元素class
-					"sTme":"13000000",				  //事件发生开始时间
-					"eTme":"130020122",				  //事件结束事件							
-					"val":"123,3000:1234,4000:12345",   //事件发生后不同时间元素的值	  		
-					"utk":"usertoken"					  //关联后台日志							（未实现）
+					"eId":"qyd_acb_0_1",		  //事件发生的元素ID	
+					"className":"js_acb_2_0",	  //事件发生的元素class
+					"sTme":"13000000",		  //事件发生开始时间
+					"eTme":"130020122",		  //事件结束事件					
+					"val":"123,3000:1234,4000:12345", //事件发生后不同时间元素的值	  		
+					"utk":"usertoken"		  //关联后台日志（未实现）
 				}
 			]
 		}
@@ -73,42 +76,42 @@
 2. 接口异常数据
 	
 		{
-	        "type":"ACRERR",     //上报数据类型：接口异常
-	        "path":"www.domain.com/w/w/w/",   //事件发生页面的url
-	        "sTme":"2017-06-21 13:31:31",				  //事件发生时间
-	        "requrl"     : "/mt/klalsjdjlenm",       //接口地址
-	        "readyState" : "2",    //当前状态,0-未初始化，1-正在载入，2-已经载入，3-数据进行交互，4-完成。
-	        "status"     : "301",  //请求状态码：400，500，404
-	        "statusText" : "Internal Server Error",  //404错误信息是not found,500是Internal Server Error。
-			"textStatus" : "parsererror",  //timeout"（超时）, "error"（错误）, "abort"(中止), "parsererror"（解析错误）     
+	        "type":"ACRERR",                   //上报数据类型：接口异常
+	        "path":"www.domain.com/w/w/w/",    //事件发生页面的url
+	        "sTme":"2017-06-21 13:31:31",	   //事件发生时间
+	        "requrl"     : "/mt/klalsjdjlenm", //接口地址
+	        "readyState" : "2",                //当前状态,0-未初始化，1-正在载入，2-已经载入，3-数据进行交互，4-完成。
+	        "status"     : "301",              //请求状态码：400，500，404
+	        "statusText" : "Internal Server Error", //404错误信息是not found,500是Internal Server Error。
+		"textStatus" : "parsererror", //timeout"（超时）, "error"（错误）, "abort"(中止), "parsererror"（解析错误）     
 	    }
     
 3. 代码异常数据
 	
 		{
-	        "type":"ACCERR",     //上报数据类型：代码异常
+	        "type":"ACCERR",     		  //上报数据类型：代码异常
 	        "path":"www.domain.com/w/w/w/",   //事件发生页面的url
 	        "sTme":"2017-06-21 13:31:31",	  //事件发生时间
 	        "msg"     : "script error",       //异常摘要
-	        "line"    : "301",  //代码行数
-	        "col"     : "异常",  //异常堆栈数据
-			 "err"     : "异常信息",  
-			 "ua"		 : "ios/chrome 44.44"  //浏览器版本
+	        "line"    : "301",  		  //代码行数
+	        "col"     : "异常",  		 //异常堆栈数据
+		"err"     : "异常信息",  
+		"ua"      : "ios/chrome 44.44"    //浏览器版本
 	    }
     
 4. 时间数据
 	
 		{
-		    "type":"ACTIME",     //上报数据类型：代码异常
+		    "type":"ACTIME",     	      //上报数据类型：代码异常
 		    "path":"www.domain.com/w/w/w/",   //事件发生页面的url
-		    "DNS"     : "152",       //DNS查询时间
-		    "TCP"     : "525",  		//TCP连接耗时
-		    "WT"      : "555",  	   //白屏时间
-		    "DR"      : "123", 		//dom ready时间，脚本加载完成时间
-			 "ONL"		 : "152",  		//执行onload事件耗时
-			 "ALLRT"	 : "152",  		//所有请求耗时
-			 "PRDOM"	 : "152",  		//dom解析耗时
-			 "FXHR"	 : "152"  		//第一个请求发起时间
+		    "DNS"     : "152",       	      //DNS查询时间
+		    "TCP"     : "525",  	      //TCP连接耗时
+		    "WT"      : "555",  	      //白屏时间
+		    "DR"      : "123", 		      //dom ready时间，脚本加载完成时间
+		    "ONL"     : "152",     	      //执行onload事件耗时
+		    "ALLRT"   : "152",                //所有请求耗时
+		    "PRDOM"   : "152",                //dom解析耗时
+		    "FXHR"    : "152"  	              //第一个请求发起时间
 		}
 		
 		
