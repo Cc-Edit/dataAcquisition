@@ -53,10 +53,39 @@
 
 ### 可配置参数：
         sendUrl      : "http://localhost:9090/logStash/push",   //log采集地址
-        selector     : 'input',     //通过控制输入框的选择器来限定监听范围$("*[id^='qyd_aci']");
-        acRange      : ['text','tel','password'],   //输入框采集范围
-        maxDays      : 5,           //cookie期限
-        acblength    : 2,           //点击元素采集层数
+        selector     : 'input',     //配置输入框的选择器来限定input.focus.blur事件监听范围;
+        acRange      : ['text','tel'],   //配置输入框type属性,控制采集范围
+        maxDays      : 5,           //cookie期限,默认:5天
+        acblength    : 2,           //点击元素采集层数.层数越深数据越大
+
+### 参数介绍：
+
+#### sendUrl
+    与之搭配的后台接口,可以用node写一个接收端来写日志.
+    注意:该接口最好不要阻塞,以免影响页面响应.
+
+#### selector
+    selector选项用来控制输入框input.focus.blur事件的采集范围,其实就是一个jquery的选择器
+    默认的"input"  等同于 $("input")
+    例子:"*[id^='qyd_aci']" 等同于 $("*[id^='qyd_aci']"),将会选择指定id的input标签进行采集.
+    只需要对需要采集的元素添加一个符合条件的ID属性即可:<input id="qyd_aci_0001" />
+    可以通过指定id实现主动埋点的功能.
+
+#### acRange
+    此条件用来控制输入框的采集范围,与 selector 选项功能一致,但优先级低于 selector 选项
+    注意,尽量不要采集type类型为password的元素内容,以免信息泄露
+
+#### maxDays
+    cookie的保存期限,不建议设置过长事件,以免影响其他cookie存储
+
+#### acblength
+    此选项用来限制点击事件的冒泡层数.
+    我们通过 document.addEventListener("click", function (e) {...}); 来监听点击事件.
+    选择事件冒泡的原理来采集,是因为有的html内容是js动态生成的,固定的选择器会遗漏掉.
+    目前的点击采集是自动埋点,所有元素的点击都会向上冒泡采集两层,采集的结果会有很多小元素,更具体的显示用户行为
+    当然,点击事件也支持主动埋点,只需要将329行注释掉的代码解开即可
+    注意,主动埋点与自动埋点只能保留一种.(当然你可以自己定制)
+
 ### 数据格式：
 1. 行为数据
 
