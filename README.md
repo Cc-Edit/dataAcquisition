@@ -59,25 +59,20 @@
         acblength    : 2,           //点击元素采集层数.层数越深数据越大
 
 ### 参数介绍：
-
 #### sendUrl
     与之搭配的后台接口,可以用node写一个接收端来写日志.
     注意:该接口最好不要阻塞,以免影响页面响应.
-
 #### selector
     selector选项用来控制输入框input.focus.blur事件的采集范围,其实就是一个jquery的选择器
     默认的"input"  等同于 $("input")
     例子:"*[id^='qyd_aci']" 等同于 $("*[id^='qyd_aci']"),将会选择指定id的input标签进行采集.
     只需要对需要采集的元素添加一个符合条件的ID属性即可:<input id="qyd_aci_0001" />
     可以通过指定id实现主动埋点的功能.
-
 #### acRange
     此条件用来控制输入框的采集范围,与 selector 选项功能一致,但优先级低于 selector 选项
     注意,尽量不要采集type类型为password的元素内容,以免信息泄露
-
 #### maxDays
     cookie的保存期限,不建议设置过长事件,以免影响其他cookie存储
-
 #### acblength
     此选项用来限制点击事件的冒泡层数.
     我们通过 document.addEventListener("click", function (e) {...}); 来监听点击事件.
