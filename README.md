@@ -72,7 +72,7 @@
     此条件用来控制输入框的采集范围,与 selector 选项功能一致,但优先级低于 selector 选项
     注意,尽量不要采集type类型为password的元素内容,以免信息泄露
 #### maxDays
-    cookie的保存期限,不建议设置过长事件,以免影响其他cookie存储
+    cookie的保存期限,不建议设置过长时间,以免影响其他cookie存储
 #### acblength
     此选项用来限制点击事件的冒泡层数.
     我们通过 document.addEventListener("click", function (e) {...}); 来监听点击事件.
