@@ -353,13 +353,45 @@ var dataAcquisition = {
         }
         data = data.concat(clickAcData, reqErrAcData, codeErrAcData, timingAcData);
 
-        $.ajax({
+        this._ajax({
             type: "POST",
             dataType: "json",
             contentType: "application/json",
             data: JSON.stringify({uuid: uuid, acData: data}),
             url: _this.store.sendUrl
         });
+    },
+    _ajax: function (options) {
+        var xhr, params;
+        options = options || {};
+        options.type = (options.type || "GET").toUpperCase();
+        options.dataType = (options.dataType || "json");
+        options.async = (options.async || true);
+        if (options.data) {
+            params = options.data;
+        }
+        // 非IE6
+        if (window.XMLHttpRequest) {
+            xhr = new XMLHttpRequest();
+            if (xhr.overrideMimeType) {
+                xhr.overrideMimeType('text/xml');
+            }
+        } else { //IE6及其以下版本浏览器
+            xhr = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+
+        if (options.type == "GET") {
+            xhr.open("GET", options.url + "?" + params, options.async);
+            xhr.send(null);
+        } else if (options.type == "POST") {
+            xhr.open("POST", options.url, options.async);
+            xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+            if (params) {
+                xhr.send(params);
+            } else {
+                xhr.send();
+            }
+        }
     }
 };
 if (typeof define === "function" && define.amd) {
