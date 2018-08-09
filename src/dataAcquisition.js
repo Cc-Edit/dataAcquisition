@@ -3,7 +3,7 @@
  */
 var dataAcquisition = {
     store:{ //配置项
-        storeVer     : '1.0.1',     //版本号
+        storeVer     : '1.0.2',     //版本号
         storeInput   : "ACINPUT",   //输入采集标记
         storePage    : "ACPAGE",    //页面采集标记
         storeClick   : "ACCLIK",    //点击事件采集标记
@@ -16,7 +16,8 @@ var dataAcquisition = {
         userSha      : 'userSha',   //用户标识
         maxDays      : 5,           //cookie期限
         acbLength    : 2,           //点击元素采集层数
-        useStorage   : false        //自动检测是否使用storage，不要手动更改
+        useStorage   : false,       //自动检测是否使用storage，不要手动更改
+        openAjaxHock : true         //自动检测是否开启ajax异常采集,未使用jquery情况下自动关闭
     },
     util: { //工具函数
         isNullOrEmpty: function (obj) {
@@ -77,39 +78,28 @@ var dataAcquisition = {
         }
     },
     init: function () {
+        var _this = this, _ACIDoms = $(this.store.selector);
+
         this.store.useStorage = (typeof window.localStorage != 'undefined');
-        var _this = this,
-            _domList = [],
-            _ACIDoms = $(this.store.selector),
-            storePath = window.location.pathname,
-            nowStr = this.util.getTimeStr(),
-            inputAcData = this.getAc2Type(this.store.storeInput),
-            clickAcData = this.getAc2Type(this.store.storeClick),
-            reqErrAcData = this.getAc2Type(this.store.storeReqErr),
-            timingAcData = this.getAc2Type(this.store.storeTiming),
-            codeErrAcData = this.getAc2Type(this.store.storeCodeErr);
-        this.util.setCookie(this.store.storePage, storePath);
+        this.store.openAjaxHock = (!this.util.isNullOrEmpty($) && !this.util.isNullOrEmpty($.ajax));
+        this.util.setCookie(this.store.storePage, window.location.pathname);
+
         if (this.util.isNullOrEmpty(this.util.getCookie(this.store.userSha))) {
             this.util.setCookie(this.store.userSha, this.util.getUuid())
         }
 
-        //上报上一个页面数据
-        _domList.push({'type': this.store.storePage, 'path': storePath, sTme: nowStr, eTme: nowStr});
-        if (!_this.util.isNullOrEmpty(inputAcData)) {
-            for (var key in inputAcData) {
-                _domList.push(inputAcData[key]);
-            }
+        this.postData();
+
+        if(this.store.openAjaxHock){
+            //对ajax绑定error处理，将异常信息做上报
+            this.bindAjaxHook();
         }
-        _domList = _domList.concat(clickAcData, reqErrAcData, codeErrAcData, timingAcData);
-
-        this.postData(_domList);
-
-        //对ajax绑定error处理，将异常信息做上报
-        this.bindAjaxHook();
         //对代码异常做监控，对异常上报
         this.bindCodeHook();
+
         //对页面加载信息进行监听上报
         this.setPerformanceAc();
+
         //对本页面添加监听（ios兼容性问题）
         if (/iphone|ipad|ipod/i.test(window.navigator.userAgent)) {
             var elements = document.getElementsByTagName("body")[0].childNodes;
@@ -118,6 +108,7 @@ var dataAcquisition = {
                 });
             }
         }
+
         //输入框事件监听
         for (var i = 0; i < _ACIDoms.length; i++) {
             var selector = _ACIDoms[i];
@@ -133,6 +124,7 @@ var dataAcquisition = {
                 });
             }
         }
+
         //点击事件监听
         document.addEventListener("click", function (e) {
             var event = window.event || e;
@@ -340,9 +332,27 @@ var dataAcquisition = {
             }
         }
     },
-    postData: function (data) {//数据上报
-        var uuid = this.util.getCookie(this.store.userSha) || this.util.getUuid;
-        var _this = this;
+    postData: function () {//数据上报
+        var _this = this,
+            data = [],
+            storePath = window.location.pathname,
+            nowStr = this.util.getTimeStr(),
+            inputAcData = this.getAc2Type(this.store.storeInput),
+            clickAcData = this.getAc2Type(this.store.storeClick),
+            reqErrAcData = this.getAc2Type(this.store.storeReqErr),
+            timingAcData = this.getAc2Type(this.store.storeTiming),
+            codeErrAcData = this.getAc2Type(this.store.storeCodeErr),
+            uuid = this.util.getCookie(this.store.userSha) || this.util.getUuid;
+
+        //上报数据
+        data.push({'type': this.store.storePage, 'path': storePath, sTme: nowStr, eTme: nowStr});
+        if (!_this.util.isNullOrEmpty(inputAcData)) {
+            for (var key in inputAcData) {
+                data.push(inputAcData[key]);
+            }
+        }
+        data = data.concat(clickAcData, reqErrAcData, codeErrAcData, timingAcData);
+
         $.ajax({
             type: "POST",
             dataType: "json",
