@@ -261,7 +261,7 @@ var dataAcquisition = {
             readyState: xhr.readyState,  //状态码
             status: xhr.status,
             statusText: xhr.statusText,
-            textStatus: xhr.responseText 
+            textStatus: xhr.responseText
         };
         ACEdata.push(ErrorData);
         this.util.setCookie(this.store.storeReqErr, JSON.stringify(ACEdata))

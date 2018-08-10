@@ -1,0 +1,123 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="full-screen" content="yes">
+    <meta name="x5-fullscreen" content="true">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="Cache" content="no-cache">
+    <title>dataAc demo</title>
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <style>
+        blockquote > p{
+            font-size: 14px;
+        }
+        h4{
+            margin-top: 30px;
+        }
+        .row{
+            padding: 0px 15px;
+        }
+    </style>
+</head>
+<body class="cube">
+<div class="container-fluid">
+    <h2>数据采集demo(依赖jquery)</h2>
+    <h4>① demo使用说明</h4>
+    <ol>
+        <li>采集插件必须在jquery之后加载</li>
+        <li>采集插件必须在业务代码之前加载</li>
+        <li>当前页面采集的数据会在下一个页面上报,你也可以通过点击上报数据按钮手动上报当前数据</li>
+        <li>您可在数据看板页面观察上报的数据: www.baidu.com </li>
+    </ol>
+    <h4>② 页面浏览数据上报</h4>
+    <blockquote><p>
+        通过点击以下链接,可在不同页面上报数据
+    </p></blockquote>
+    <a href="./index.html" class="btn btn-info">首页( index.html )</a>
+    <a href="./test1.html" class="btn btn-info">测试页面1( test1.html )</a>
+    <a href="./test2.html" class="btn btn-info">测试页面2( test2.html )</a>
+    <a href="./test3.html" class="btn btn-info">测试页面3( test3.html )</a>
+
+    <h4>③ 点击事件采集</h4>
+    <blockquote><p>
+        您可以点击此页面任何元素,不限于以下按钮.
+        按钮后方括号内为当前元素标签类型
+        用于展示事件可以绑定到任意元素上
+    </p></blockquote>
+    <div class="row">
+        <button class="btn btn-primary">测试按钮1( button )</button>
+        <span class="btn btn-primary">测试按钮2( span )</span>
+        <a class="btn btn-primary">测试按钮3( a )</a>
+        <label class="btn btn-primary">测试按钮4( label )</label>
+    </div>
+    <br/>
+    <div class="row">
+        <div class="btn btn-primary">测试按钮5( div )</div>
+        <i class="btn btn-primary">测试按钮6( i )</i>
+        <p class="btn btn-primary">测试按钮7( p )</p>
+        <b class="btn btn-primary">测试按钮7( b )</b>
+    </div>
+
+
+    <h4>④ 输入框事件采集</h4>
+    <blockquote><p>
+        输入框会采集输入的内容以及间隔时间,可以同归type控制可采集的元素<br/>
+        下方账号的输入框可以采集, 密码输入框默认不采集
+    </p></blockquote>
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label class="col-sm-1 control-label">账号:</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" placeholder="请输入账号">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-1 control-label">密码</label>
+            <div class="col-sm-3">
+                <input type="password" class="form-control" placeholder="Password">
+            </div>
+        </div>
+    </form>
+
+    <h4>⑤ 代码异常采集</h4>
+    <blockquote><p>
+        通过点击按钮,执行一个错误的方法,并在console输出错误信息,错误信息会被插件采集
+    </p></blockquote>
+    <button id="testCodeErr" class="btn btn-warning">点击测试代码异常采集</button>
+
+    <h4>⑥ 请求异常采集</h4>
+    <blockquote><p>
+        通过点击发送请求按钮,发送一个错误的ajax请求,该请求会被采集
+    </p></blockquote>
+    <button id="testAjaxErr"  class="btn btn-success">发送请求</button>
+
+    <h4>⑦ 手动上报数据</h4>
+    <blockquote><p>插件默认采用页面加载时上报上一个页面的策略<br/>
+        如遇单页面应用程序,可通过手动上报的方式采集数据
+    </p></blockquote>
+    <button id="testSendData" class="btn btn-success">上报数据</button>
+
+    <h4>⑧ 页面性能上报</h4>
+    <blockquote>
+        <p>
+        目前支持的策略:<br/>
+        DNS = DNS查询时间<br/>
+        TCP = TCP连接耗时<br/>
+        WT = 白屏时间<br/>
+        PRDOM = dom解析耗时<br/>
+        DR = dom ready时间，脚本加载完成时间<br/>
+        ONL = 执行onload事件耗时<br/>
+        FXHR = 第一个请求发起时间<br/>
+        ALLRT = 所有请求耗时
+        </p>
+    </blockquote>
+</div>
+<script type="text/javascript" src="./js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="./js/dataAcquisition.js"></script>
+<script type="text/javascript" src="./js/index.js"></script>
+</body>
+</html>
