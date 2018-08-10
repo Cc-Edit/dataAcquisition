@@ -120,10 +120,10 @@
         $('.js-send').text(sendSize + '条');
         $('.js-input').text(inputSize + '条');
 
-        $('.js-userFoot').text(userFoot.join(''));
-        $('.js-errCode').text(errCode.join(''));
-        $('.js-reqError').text(reqError.join(''));
-        $('.js-pagePer').text(pagePer.join(''));
+        $('.js-userFoot').html(userFoot.join(''));
+        $('.js-errCode').html(errCode.join(''));
+        $('.js-reqError').html(reqError.join(''));
+        $('.js-pagePer').html(pagePer.join(''));
     }
 
     function getCookie(name) {

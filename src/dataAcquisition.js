@@ -235,10 +235,10 @@ var dataAcquisition = {
                 loadAcData.DNS = _Timing.domainLookupEnd - _Timing.domainLookupStart; //DNS查询时间
                 loadAcData.TCP = _Timing.connectEnd - _Timing.connectStart; //TCP连接耗时
                 loadAcData.WT = _Timing.responseStart - _Timing.navigationStart; //白屏时间
-                loadAcData.DR = _Timing.domContentLoadedEventEnd - _Timing.navigationStart; //dom ready时间，脚本加载完成时间
+                loadAcData.PRDOM = _Timing.domComplete - _Timing.responseEnd; //dom解析耗时
                 loadAcData.ONL = _Timing.loadEventEnd - _Timing.navigationStart; //执行onload事件耗时
-                loadAcData.ALLRT = _Timing.responseEnd - _Timing.redirectStart; //所有请求耗时
-                loadAcData.PRDOM = _Timing.domComplete - _Timing.domInteractive; //dom解析耗时
+                loadAcData.DR = _Timing.domContentLoadedEventEnd - _Timing.navigationStart; //dom ready时间，脚本加载完成时间
+                loadAcData.ALLRT = _Timing.responseEnd - _Timing.requestStart; //所有请求耗时
                 loadAcData.FXHR = _Timing.fetchStart - _Timing.navigationStart; //第一个请求发起时间
                 ACPdata.push(loadAcData);
                 this.util.setCookie(this.store.storeTiming, JSON.stringify(ACPdata));
