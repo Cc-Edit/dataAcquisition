@@ -1,17 +1,25 @@
 ## 前端数据采集上报插件 dataAcquisition.js （求个小星星）
 
 ### 公告：
-大家在使用过程中有任何需求，或者不满意的点都可以提交上来。
+大家在使用过程中有任何需求，或者有不满意的点都可以提交上来。
+如果您也想参与到开源项目的维护中,请关注我的公众号: **js前端架构**
+回复:开源 ,我会邀请您到微信群中,与我们一同参与后期的开发维护。
+![js前端架构](http://www.isjs.cn/wp-content/uploads/2013/06/2018_07_25_1136562613-1.png "关注我哟")
+
+### demo：
+数据采集页面(在此页面的才做会被采集上报): [https://open.isjs.cn/demo-jquery/index.html](https://open.isjs.cn/demo-jquery/index.html)
+数据分析页面(上报的数据会在此页面展示): [https://open.isjs.cn/admin/index.html](https://open.isjs.cn/admin/index.html)
+注: 数据上报的时机是页面跳转或者手动触发
 
 ### 目的：
 1. 实现前端数据上报分析
 2. 实现用户画像建模，轨迹分析
 3. 实现主动埋点上报以及自动埋点
 4. 搭配node接口实现日志存储解析
-5. 基于powerBI实现数据分析展示
-6. 实现前端页面加载速度上报 
-7. 实现前端接口异常上报     
-8. 实现前端代码异常上报	
+5. 实现前端页面加载速度上报
+6. 实现前端接口异常上报
+7. 实现前端代码异常上报
+8. 实现页面圈选采集  (未完成)
 
 ### 使用方式：
 1. clone代码到本地
@@ -51,11 +59,24 @@
 
 2017-06-23 - 增加performance API统计页面加载时间信息
 
+版本升级：1.0.2
+
+2018-08-9  - 减少对jquery的依赖,除选择器外已全部替换
+
+2018-08-10 - 增加配置,增加demo展示
+
 ### 可配置参数：
         sendUrl      : "http://localhost:9090/logStash/push",   //log采集地址
         selector     : 'input',     //配置输入框的选择器来限定input.focus.blur事件监听范围;
         acRange      : ['text','tel'],   //配置输入框type属性,控制采集范围
         maxDays      : 5,           //cookie期限,默认:5天
+        userSha      : 'userSha',   //用户标识保存key
+        classTag     : 'isjs-ac',   //主动埋点时的class,设置为''时为全量采集,数据会很大
+        openInput    : 'true',      //是否开启输入采集
+        openCodeErr  : 'true',      //是否开启代码异常采集
+        openClick    : 'true',      //是否开启点击数据采集
+        openAjaxData : 'true',      //是否采集异常请求的params(注意隐私数据的保护)
+        openPerformance : 'true',   //是否开启页面性能采集
         acblength    : 2,           //点击元素采集层数.层数越深数据越大
 
 ### 参数介绍：
@@ -71,6 +92,10 @@
 #### acRange
     此条件用来控制输入框的采集范围,与 selector 选项功能一致,但优先级低于 selector 选项
     注意,尽量不要采集type类型为password的元素内容,以免信息泄露
+#### classTag
+    全量采集情况下,使用此条件做点击元素的过滤,避免数据过大
+#### userSha
+    用户uuid在浏览器中保存的key,有冲突时可以手动修改
 #### maxDays
     cookie的保存期限,不建议设置过长时间,以免影响其他cookie存储
 #### acblength
@@ -87,14 +112,14 @@
 		{
 			"uuid":"F6A6C801B7197603",                        //用户标识，5天有效
 			"acData":[					  //数据集
-					{
+                {
 					"type":"ACINPUT/ACPAGE/ACCLIK",   //上报数据类型：输入框/页面访问/点击事件
 					"path":"www.domain.com/w/w/w/",   //事件发生的url
-					"eId":"qyd_acb_0_1",		  //事件发生的元素ID	
+					"eId":"qyd_acb_0_1",		  //事件发生的元素ID
 					"className":"js_acb_2_0",	  //事件发生的元素class
 					"sTme":"13000000",		  //事件发生开始时间
-					"eTme":"130020122",		  //事件结束事件					
-					"val":"123,3000:1234,4000:12345", //事件发生后不同时间元素的值	  		
+					"eTme":"130020122",		  //事件结束事件
+					"val":"123,3000:1234,4000:12345", //事件发生后不同时间元素的值
 					"utk":"usertoken"		  //关联后台日志（未实现）
 				}
 			]
@@ -103,34 +128,34 @@
 2. 接口异常数据
 	
 		{
-	        "type":"ACRERR",                   //上报数据类型：接口异常
-	        "path":"www.domain.com/w/w/w/",    //事件发生页面的url
-	        "sTme":"2017-06-21 13:31:31",	   //事件发生时间
+	        "type"       :"ACRERR",                   //上报数据类型：接口异常
+	        "path"       :"www.domain.com/w/w/w/",    //事件发生页面的url
+	        "sTme"       :"2017-06-21 13:31:31",	   //事件发生时间
 	        "requrl"     : "/mt/klalsjdjlenm", //接口地址
 	        "readyState" : "2",                //当前状态,0-未初始化，1-正在载入，2-已经载入，3-数据进行交互，4-完成。
 	        "status"     : "301",              //请求状态码：400，500，404
 	        "statusText" : "Internal Server Error", //404错误信息是not found,500是Internal Server Error。
-		"textStatus" : "parsererror", //timeout"（超时）, "error"（错误）, "abort"(中止), "parsererror"（解析错误）     
+		    "textStatus" : "parsererror", //timeout"（超时）, "error"（错误）, "abort"(中止), "parsererror"（解析错误）
 	    }
     
 3. 代码异常数据
 	
 		{
-	        "type":"ACCERR",     		  //上报数据类型：代码异常
-	        "path":"www.domain.com/w/w/w/",   //事件发生页面的url
-	        "sTme":"2017-06-21 13:31:31",	  //事件发生时间
+	        "type"    :"ACCERR",     		  //上报数据类型：代码异常
+	        "path"    :"www.domain.com/w/w/w/",   //事件发生页面的url
+	        "sTme"    :"2017-06-21 13:31:31",	  //事件发生时间
 	        "msg"     : "script error",       //异常摘要
 	        "line"    : "301",  		  //代码行数
 	        "col"     : "异常",  		 //异常堆栈数据
-		"err"     : "异常信息",  
-		"ua"      : "ios/chrome 44.44"    //浏览器版本
+		    "err"     : "异常信息",
+		    "ua"      : "ios/chrome 44.44"    //浏览器版本
 	    }
     
 4. 时间数据
 	
 		{
-		    "type":"ACTIME",     	      //上报数据类型：代码异常
-		    "path":"www.domain.com/w/w/w/",   //事件发生页面的url
+		    "type"    :"ACTIME",     	      //上报数据类型：代码异常
+		    "path"    :"www.domain.com/w/w/w/",   //事件发生页面的url
 		    "DNS"     : "152",       	      //DNS查询时间
 		    "TCP"     : "525",  	      //TCP连接耗时
 		    "WT"      : "555",  	      //白屏时间
