@@ -10,7 +10,7 @@ var dataAcquisition = {
         storeReqErr  : "ACRERR",    //请求异常采集标记
         storeTiming  : "ACTIME",    //页面时间采集标记
         storeCodeErr : "ACCERR",    //代码异常采集标记
-        sendUrl      : "http://localhost:9090/logStash/push",   //log采集地址（需配置）
+        sendUrl      : "http://localhost:8110/logStash/push",   //log采集地址（需配置）
         selector     : 'input',     //通过控制输入框的选择器来限定监听范围$("*[id^='qyd_aci']");
         acRange      : ['text','tel'],   //输入框采集范围
         userSha      : 'userSha',   //用户标识
