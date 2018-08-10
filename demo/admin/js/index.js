@@ -41,6 +41,7 @@
         });
     }
     function renderPage(uuid, acData) {
+        console.log(acData)
         var pageSize = 0,
             codeSize = 0,
             sendSize = 0,
@@ -69,7 +70,7 @@
                         '<td>'+ acData[i].sTme +'</td>' +
                         '<td>'+ acData[i].path +'</td>' +
                         '<td>输入</td>' +
-                        '<td>'+ acData[i].eId + '|'+ acData[i].className +'</td>' +
+                        '<td>class: '+ acData[i].className +'</td>' +
                         '<td>'+ acData[i].val + '</td></tr>');
                     break;
                 case 'ACCLIK':
@@ -79,7 +80,7 @@
                         '<td>'+ acData[i].sTme +'</td>' +
                         '<td>'+ acData[i].path +'</td>' +
                         '<td>点击</td>' +
-                        '<td>'+ acData[i].eId + '|'+ acData[i].className +'</td>' +
+                        '<td>class: '+ acData[i].className +'</td>' +
                         '<td>'+ acData[i].val + '</td></tr>');
                     break;
                 case 'ACRERR':
@@ -90,7 +91,7 @@
                         '<td>'+ acData[i].requrl +'</td>' +
                         '<td>'+ acData[i].reqData +'</td>' +
                         '<td>'+ acData[i].status +'</td>' +
-                        '<td>'+ acData[i].textStatus +'</td></tr>');
+                        '<td>'+ acData[i].statusText +'</td></tr>');
                     break;
                 case 'ACTIME':
                     pagePer.push('<tr class="' + (pagePer.length % 2 == 0 ? '':'success') +'">' +
@@ -110,7 +111,7 @@
                         '<td>'+ acData[i].sTme +'</td>' +
                         '<td>'+ acData[i].path +'</td>' +
                         '<td>'+ acData[i].msg +'</td>' +
-                        '<td>line:'+ acData[i].line + ' | col:' + acData[i].col +'</td>' +
+                        '<td>line: '+ acData[i].line + ' <br/> col: ' + acData[i].col +'</td>' +
                         '<td>'+ acData[i].err +'</td>' +
                         '<td>'+ acData[i].ua +'</td></tr>');
                     break;
