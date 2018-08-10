@@ -44,22 +44,24 @@
 
     <h4>③ 点击事件采集</h4>
     <blockquote><p>
-        您可以点击此页面任何元素,不限于以下按钮.
-        按钮后方括号内为当前元素标签类型
-        用于展示事件可以绑定到任意元素上
+        您可以点击此页面任何元素,不限于以下按钮<br/>
+        按钮后方括号内为当前元素标签类型<br/>
+        注意:只有拥有id或class属性的元素会被采集.<br/>
+        本demo中,为防止数据过大,使用了主动埋点,即设置:classTag:isjs-ac
+        对应的在需要采集的按钮上加入class标识: isjs-acb01
     </p></blockquote>
     <div class="row">
-        <button class="btn btn-primary">测试按钮1( button )</button>
-        <span class="btn btn-primary">测试按钮2( span )</span>
-        <a class="btn btn-primary">测试按钮3( a )</a>
-        <label class="btn btn-primary">测试按钮4( label )</label>
+        <button class="isjs-acb01 btn btn-primary">测试按钮1( button )</button>
+        <span class="isjs-acb02 btn btn-primary">测试按钮2( span )</span>
+        <a class="isjs-acb03 btn btn-primary">测试按钮3( a )</a>
+        <label class="isjs-acb04 btn btn-primary">测试按钮4( label )</label>
     </div>
     <br/>
     <div class="row">
-        <div class="btn btn-primary">测试按钮5( div )</div>
-        <i class="btn btn-primary">测试按钮6( i )</i>
-        <p class="btn btn-primary">测试按钮7( p )</p>
-        <b class="btn btn-primary">测试按钮7( b )</b>
+        <div class="isjs-acb05 btn btn-primary">测试按钮5( div )</div>
+        <i class="isjs-acb06 btn btn-primary">测试按钮6( i )</i>
+        <p class="isjs-acb07 btn btn-primary">测试按钮7( p )</p>
+        <b class="isjs-acb08 btn btn-primary">测试按钮8( b )</b>
     </div>
 
 
@@ -91,7 +93,8 @@
 
     <h4>⑥ 请求异常采集</h4>
     <blockquote><p>
-        通过点击发送请求按钮,发送一个错误的ajax请求,该请求会被采集
+        通过点击发送请求按钮,发送一个错误的ajax请求,该请求会被采集.
+        注意: 插件默认会采集失败接口的参数,如果您的参数中有重要信息,请关闭openAjaxData配置
     </p></blockquote>
     <button id="testAjaxErr"  class="btn btn-success">发送请求</button>
 
@@ -104,15 +107,15 @@
     <h4>⑧ 页面性能上报</h4>
     <blockquote>
         <p>
-        目前支持的策略:<br/>
-        DNS = DNS查询时间<br/>
-        TCP = TCP连接耗时<br/>
-        WT = 白屏时间<br/>
-        PRDOM = dom解析耗时<br/>
-        DR = dom ready时间，脚本加载完成时间<br/>
-        ONL = 执行onload事件耗时<br/>
-        FXHR = 第一个请求发起时间<br/>
-        ALLRT = 所有请求耗时
+            目前支持的策略:<br/>
+            DNS = DNS查询时间<br/>
+            TCP = TCP连接耗时<br/>
+            WT = 白屏时间<br/>
+            PRDOM = dom解析耗时<br/>
+            DR = dom ready时间，脚本加载完成时间<br/>
+            ONL = 执行onload事件耗时<br/>
+            FXHR = 第一个请求发起时间<br/>
+            ALLRT = 所有请求耗时
         </p>
     </blockquote>
 </div>

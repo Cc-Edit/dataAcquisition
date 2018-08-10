@@ -14,14 +14,17 @@ var dataAcquisition = {
         selector     : 'input',     //通过控制输入框的选择器来限定监听范围$("*[id^='qyd_aci']");
         acRange      : ['text','tel'],   //输入框采集范围
         userSha      : 'userSha',   //用户标识
+        // classTag     : '',          //自动埋点,数据大
+        classTag     : 'isjs-ac',   //主动埋点标识
         maxDays      : 5,           //cookie期限
         acbLength    : 2,           //点击元素采集层数
         useStorage   : false,       //自动检测是否使用storage，不要手动更改
         openInput    : true,        //是否开启输入数据采集
         openCodeErr  : true,        //是否开启代码异常采集
         openClick    : true,        //是否开启点击数据采集
-        openPerformance : true,     //是否开启页面性能采集
-        openAjaxHock : true         //自动检测是否开启ajax异常采集,未使用jquery情况下自动关闭
+        openAjaxData : true,        //是否采集接口异常时的参数params
+        openAjaxHock : true,        //自动检测是否开启ajax异常采集,未使用jquery情况下自动关闭
+        openPerformance : true      //是否开启页面性能采集
     },
     util: { //工具函数
         isNullOrEmpty: function (obj) {
@@ -257,12 +260,14 @@ var dataAcquisition = {
             path: this.util.getCookie(this.store.storePage),
             sTme: nowStr,
             requrl: opts.url,
-            reqData:opts.data,
             readyState: xhr.readyState,  //状态码
             status: xhr.status,
             statusText: xhr.statusText,
             textStatus: xhr.responseText
         };
+        if(this.store.openAjaxData){
+            ErrorData.reqData = opts.data;
+        }
         ACEdata.push(ErrorData);
         this.util.setCookie(this.store.storeReqErr, JSON.stringify(ACEdata))
     },
@@ -297,7 +302,8 @@ var dataAcquisition = {
         if (this.util.isNullOrEmpty(e.id) && this.util.isNullOrEmpty(e.className)) {
             return;
         }
-        if (['container'].indexOf(e.id) > -1 || e.innerText.length > 10) {
+        //主动埋点生效
+        if(!this.util.isNullOrEmpty(this.store.classTag) && e.className.indexOf(this.store.classTag) < 0){
             return;
         }
         var storeString = this.util.getCookie(this.store.storeClick);
@@ -342,7 +348,7 @@ var dataAcquisition = {
 
             /* 自动埋点采集点击数据时,使用下面的建议*/
             this.setClickAc(node);
-            if (Object.prototype.toString.call(parentNode) !== Object.prototype.toString.call(document) && length < this.store.acblength) {
+            if (Object.prototype.toString.call(parentNode) !== Object.prototype.toString.call(document) && length < this.store.acbLength) {
                 this.getACBtarget(parentNode, ++length);
             }
         }

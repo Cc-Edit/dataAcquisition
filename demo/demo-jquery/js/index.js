@@ -12,6 +12,7 @@
             type: 'POST',
             url: '/log/push',
             dataType: "json",
+            data: JSON.stringify({testParams:'isjs.cn'}),
             contentType:'application/json;charset=UTF-8;',
             success: function(data){
                 console.log('success')
