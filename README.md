@@ -2,13 +2,18 @@
 
 ### 公告：
 大家在使用过程中有任何需求，或者有不满意的点都可以提交上来。
+
 如果您也想参与到开源项目的维护中,请关注我的公众号: **js前端架构**
+
 回复:开源 ,我会邀请您到微信群中,与我们一同参与后期的开发维护。
+
 ![js前端架构](http://www.isjs.cn/wp-content/uploads/2013/06/2018_07_25_1136562613-1.png "关注我哟")
 
 ### demo：
 数据采集页面(在此页面的才做会被采集上报): [https://open.isjs.cn/demo-jquery/index.html](https://open.isjs.cn/demo-jquery/index.html)
+
 数据分析页面(上报的数据会在此页面展示): [https://open.isjs.cn/admin/index.html](https://open.isjs.cn/admin/index.html)
+
 注: 数据上报的时机是页面跳转或者手动触发
 
 ### 目的：
