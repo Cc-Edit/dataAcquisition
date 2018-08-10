@@ -41,37 +41,37 @@
         <div class="col-xs-2">
             <p class="head-item bg-primary">
                 <b>用户标识</b>
-                <i>999999999</i>
+                <i class="js-uuid">...</i>
             </p>
         </div>
         <div class="col-xs-2 ">
             <p class="head-item bg-success">
                 <b>页面访问</b>
-                <i>99次</i>
+                <i class="js-page">...</i>
             </p>
         </div>
         <div class="col-xs-2 ">
             <p class="head-item bg-danger">
                 <b>代码异常</b>
-                <i>99条</i>
+                <i class="js-code">...</i>
             </p>
         </div>
         <div class="col-xs-2 ">
             <p class="head-item bg-warning">
                 <b>点击次数</b>
-                <i>99次</i>
+                <i class="js-click">...</i>
             </p>
         </div>
         <div class="col-xs-2 ">
             <p class="head-item bg-danger">
                 <b>请求异常</b>
-                <i>99条</i>
+                <i class="js-send">...</i>
             </p>
         </div>
         <div class="col-xs-2 ">
             <p class="head-item bg-info">
                 <b>输入数据</b>
-                <i>99条</i>
+                <i class="js-input">...</i>
             </p>
         </div>
     </div>
@@ -89,32 +89,7 @@
                         <th>值</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr class="success">
-                        <th scope="row">1</th>
-                        <td>2018-09-09 19:19:29</td>
-                        <td>idnex.html</td>
-                        <td>页面访问</td>
-                        <td>无</td>
-                        <td>无</td>
-                    </tr>
-                    <tr >
-                        <th scope="row">2</th>
-                        <td>2018-09-09 19:19:230</td>
-                        <td>idnex.html</td>
-                        <td>点击</td>
-                        <td>isjs-acb01</td>
-                        <td>确认</td>
-                    </tr>
-                    <tr class="success">
-                        <th scope="row">3</th>
-                        <td>2018-09-09 19:19:31</td>
-                        <td>idnex.html</td>
-                        <td>输入</td>
-                        <td>isjs-acb01</td>
-                        <td>123,3000:1234,4000:12345</td>
-                    </tr>
-                </tbody>
+                <tbody class="js-userFoot"></tbody>
             </table>
         </div>
     </div>
@@ -133,7 +108,7 @@
                     <th>浏览器信息</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody class="js-errCode">
                 <tr class="success">
                     <th>2018-09-09 19:19:29</th>
                     <td>idnex.html</td>
@@ -177,32 +152,7 @@
                     <th>异常信息</th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr class="success">
-                    <th>2018-09-09 19:19:29</th>
-                    <td>idnex.html</td>
-                    <td>/mt/klalsjdjlenm</td>
-                    <td>{"asd":123}</td>
-                    <td>405</td>
-                    <td>Internal Server Error</td>
-                </tr>
-                <tr >
-                    <th>2018-09-09 19:19:29</th>
-                    <td>idnex.html</td>
-                    <td>/mt/klalsjdjlenm</td>
-                    <td>{"asd":123}</td>
-                    <td>405</td>
-                    <td>Internal Server Error</td>
-                </tr>
-                <tr class="success">
-                    <th>2018-09-09 19:19:29</th>
-                    <td>idnex.html</td>
-                    <td>/mt/klalsjdjlenm</td>
-                    <td>{"asd":123}</td>
-                    <td>405</td>
-                    <td>Internal Server Error</td>
-                </tr>
-                </tbody>
+                <tbody class="js-reqError"></tbody>
             </table>
         </div>
     </div>
@@ -213,53 +163,18 @@
             <table class="table table-bordered">
                 <thead>
                 <tr>
-                    <th>属性</th>
-                    <th>说明</th>
-                    <th>值</th>
+                    <th>页面</th>
+                    <th>DNS</th>
+                    <th>TCP</th>
+                    <th>WT</th>
+                    <th>PRDOM</th>
+                    <th>DR</th>
+                    <th>ONL</th>
+                    <th>FXHR</th>
+                    <th>ALLRT</th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr class="success">
-                    <th scope="row">DNS</th>
-                    <td>DNS解析时间</td>
-                    <td>100</td>
-                </tr>
-                <tr >
-                    <th scope="row">TCP</th>
-                    <td>DNS解析时间</td>
-                    <td>100</td>
-                </tr>
-                <tr class="success">
-                    <th scope="row">WT</th>
-                    <td>DNS解析时间</td>
-                    <td>100</td>
-                </tr>
-                <tr >
-                    <th scope="row">PRDOM</th>
-                    <td>DNS解析时间</td>
-                    <td>100</td>
-                </tr>
-                <tr class="success">
-                    <th scope="row">DR</th>
-                    <td>DNS解析时间</td>
-                    <td>100</td>
-                </tr>
-                <tr >
-                    <th scope="row">ONL</th>
-                    <td>DNS解析时间</td>
-                    <td>100</td>
-                </tr>
-                <tr class="success">
-                    <th scope="row">FXHR</th>
-                    <td>DNS解析时间</td>
-                    <td>100</td>
-                </tr>
-                <tr >
-                    <th scope="row">ALLRT</th>
-                    <td>DNS解析时间</td>
-                    <td>100</td>
-                </tr>
-                </tbody>
+                <tbody class="js-pagePer"></tbody>
             </table>
         </div>
     </div>
@@ -267,6 +182,6 @@
 
 <script type="text/javascript" src="./js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="./js/bootstrap.min.js"></script>
-<script type="text/javascript" src="./index.js"></script>
+<script type="text/javascript" src="./js/index.js"></script>
 </body>
 </html>
