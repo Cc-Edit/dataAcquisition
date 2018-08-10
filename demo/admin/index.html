@@ -11,37 +11,262 @@
     <meta http-equiv="Cache" content="no-cache">
     <title>admin demo</title>
     <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <style>
+        .row{
+            margin: 0;
+        }
+        .head-item{
+            padding: 25px 0;
+        }
+        .head-item > b{
+            display: block;
+            text-align: center;
+        }
+        .head-item > i{
+            display: block;
+            text-align: center;
+            margin-top: 10px;
+        }
+        h3{
+            text-align: center;
+        }
+    </style>
 </head>
 <body class="cube">
 <div class="container-fluid">
-    <div>
-        <h2>用户标识:999999999</h2>
-        <div>
-            <p>
-                <h4>页面访问</h4>
+    <div class="row">
+        <h3>数据采集分析</h3>
+    </div>
+    <div class="row">
+        <div class="col-xs-2">
+            <p class="head-item bg-primary">
+                <b>用户标识</b>
+                <i>999999999</i>
+            </p>
+        </div>
+        <div class="col-xs-2 ">
+            <p class="head-item bg-success">
+                <b>页面访问</b>
                 <i>99次</i>
             </p>
-            <p>
-                <h4>代码异常</h4>
+        </div>
+        <div class="col-xs-2 ">
+            <p class="head-item bg-danger">
+                <b>代码异常</b>
                 <i>99条</i>
             </p>
-            <p>
-                <h4>请求异常</h4>
-                <i>99条</i>
-            </p>
-            <p>
-                <h4>点击次数</h4>
+        </div>
+        <div class="col-xs-2 ">
+            <p class="head-item bg-warning">
+                <b>点击次数</b>
                 <i>99次</i>
             </p>
-            <p>
-                <h4>输入数据</h4>
+        </div>
+        <div class="col-xs-2 ">
+            <p class="head-item bg-danger">
+                <b>请求异常</b>
+                <i>99条</i>
+            </p>
+        </div>
+        <div class="col-xs-2 ">
+            <p class="head-item bg-info">
+                <b>输入数据</b>
                 <i>99条</i>
             </p>
         </div>
     </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <h4>用户轨迹</h4>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>时间点</th>
+                        <th>页面</th>
+                        <th>动作</th>
+                        <th>元素id/class</th>
+                        <th>值</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="success">
+                        <th scope="row">1</th>
+                        <td>2018-09-09 19:19:29</td>
+                        <td>idnex.html</td>
+                        <td>页面访问</td>
+                        <td>无</td>
+                        <td>无</td>
+                    </tr>
+                    <tr >
+                        <th scope="row">2</th>
+                        <td>2018-09-09 19:19:230</td>
+                        <td>idnex.html</td>
+                        <td>点击</td>
+                        <td>isjs-acb01</td>
+                        <td>确认</td>
+                    </tr>
+                    <tr class="success">
+                        <th scope="row">3</th>
+                        <td>2018-09-09 19:19:31</td>
+                        <td>idnex.html</td>
+                        <td>输入</td>
+                        <td>isjs-acb01</td>
+                        <td>123,3000:1234,4000:12345</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <h4>代码异常信息</h4>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>时间点</th>
+                    <th>页面</th>
+                    <th>异常摘要</th>
+                    <th>位置</th>
+                    <th>异常堆栈</th>
+                    <th>浏览器信息</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="success">
+                    <th>2018-09-09 19:19:29</th>
+                    <td>idnex.html</td>
+                    <td>script error</td>
+                    <td>line:301, col:98</td>
+                    <td>异常信息</td>
+                    <td>ios/chrome 44.44</td>
+                </tr>
+                <tr >
+                    <th>2018-09-09 19:19:29</th>
+                    <td>idnex.html</td>
+                    <td>script error</td>
+                    <td>line:301, col:98</td>
+                    <td>异常信息</td>
+                    <td>ios/chrome 44.44</td>
+                </tr>
+                <tr class="success">
+                    <th>2018-09-09 19:19:29</th>
+                    <td>idnex.html</td>
+                    <td>script error</td>
+                    <td>line:301, col:98</td>
+                    <td>异常信息</td>
+                    <td>ios/chrome 44.44</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <h4>接口异常信息</h4>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>时间点</th>
+                    <th>页面</th>
+                    <th>请求地址</th>
+                    <th>请求参数</th>
+                    <th>状态码</th>
+                    <th>异常信息</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="success">
+                    <th>2018-09-09 19:19:29</th>
+                    <td>idnex.html</td>
+                    <td>/mt/klalsjdjlenm</td>
+                    <td>{"asd":123}</td>
+                    <td>405</td>
+                    <td>Internal Server Error</td>
+                </tr>
+                <tr >
+                    <th>2018-09-09 19:19:29</th>
+                    <td>idnex.html</td>
+                    <td>/mt/klalsjdjlenm</td>
+                    <td>{"asd":123}</td>
+                    <td>405</td>
+                    <td>Internal Server Error</td>
+                </tr>
+                <tr class="success">
+                    <th>2018-09-09 19:19:29</th>
+                    <td>idnex.html</td>
+                    <td>/mt/klalsjdjlenm</td>
+                    <td>{"asd":123}</td>
+                    <td>405</td>
+                    <td>Internal Server Error</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-6">
+            <h4>页面性能</h4>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>属性</th>
+                    <th>说明</th>
+                    <th>值</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="success">
+                    <th scope="row">DNS</th>
+                    <td>DNS解析时间</td>
+                    <td>100</td>
+                </tr>
+                <tr >
+                    <th scope="row">TCP</th>
+                    <td>DNS解析时间</td>
+                    <td>100</td>
+                </tr>
+                <tr class="success">
+                    <th scope="row">WT</th>
+                    <td>DNS解析时间</td>
+                    <td>100</td>
+                </tr>
+                <tr >
+                    <th scope="row">PRDOM</th>
+                    <td>DNS解析时间</td>
+                    <td>100</td>
+                </tr>
+                <tr class="success">
+                    <th scope="row">DR</th>
+                    <td>DNS解析时间</td>
+                    <td>100</td>
+                </tr>
+                <tr >
+                    <th scope="row">ONL</th>
+                    <td>DNS解析时间</td>
+                    <td>100</td>
+                </tr>
+                <tr class="success">
+                    <th scope="row">FXHR</th>
+                    <td>DNS解析时间</td>
+                    <td>100</td>
+                </tr>
+                <tr >
+                    <th scope="row">ALLRT</th>
+                    <td>DNS解析时间</td>
+                    <td>100</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
-<script type="text/javascript" src="../demo-jquery/js/jquery-3.3.1.min.js"></script>
-<script type="text/javascript" src="../demo-jquery/js/dataAcquisition.js"></script>
-<script type="text/javascript" src="../demo-jquery/js/index.js"></script>
+
+<script type="text/javascript" src="./js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="./js/bootstrap.min.js"></script>
+<script type="text/javascript" src="./index.js"></script>
 </body>
 </html>
