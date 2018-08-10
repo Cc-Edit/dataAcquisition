@@ -3,7 +3,7 @@
  */
 (function(){
     var timer = 10;
-    setInterval(function(){
+    var interId = setInterval(function(){
         timer--;
         if(timer == 0){
             timer = 10;
@@ -17,7 +17,7 @@
     function sendAjax(){
         $.ajax({
             type: 'POST',
-            url: 'http://172.16.34.96:8110/logStash/get',
+            url: 'https://open.isjs.cn/logStash/get',
             dataType: "json",
             data: JSON.stringify({uuid:getCookie('userSha')}),
             contentType:'application/json',
@@ -29,10 +29,12 @@
                         list = JSON.parse(data.data);
                     }catch (e){
                         alert('数据异常,请联系管理员');
+                        clearInterval(interId);
                         return
                     }
                     if(list.length < 1){
                         alert('数据异常,请联系管理员');
+                        clearInterval(interId);
                         return
                     }
                     list.map(function(item, index){
@@ -40,16 +42,17 @@
                     });
                     renderPage(list[0].uuid, acData)
                 }else{
+                    clearInterval(interId);
                     alert(data.msg)
                 }
             },
             error: function (xhr, thrownError) {
+                clearInterval(interId);
                 alert('请求异常,请联系管理员')
             }
         });
     }
     function renderPage(uuid, acData) {
-        console.log(acData)
         var pageSize = 0,
             codeSize = 0,
             sendSize = 0,
