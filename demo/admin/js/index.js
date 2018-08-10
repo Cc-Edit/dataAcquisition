@@ -2,7 +2,11 @@
  * Created by xiaoqiang on 2018/8/10.
  */
 (function(){
-    setInterval(function(){
+    setInterval(sendAjax, 10000);
+
+    sendAjax();
+
+    function sendAjax(){
         $.ajax({
             type: 'POST',
             url: 'http://172.16.34.96:8110/logStash/get',
@@ -35,8 +39,7 @@
                 alert('请求异常,请联系管理员')
             }
         });
-    }, 10000);
-
+    }
     function renderPage(uuid, acData) {
         var pageSize = 0,
             codeSize = 0,
