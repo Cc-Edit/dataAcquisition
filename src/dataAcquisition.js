@@ -338,14 +338,6 @@ var dataAcquisition = {
         //length限制采集内容大小，只采集有效数据
         if (!this.util.isNullOrEmpty(node)) {
             var parentNode = node && node.parentNode;
-
-            /* 主动埋点采集点击数据时,使用下面的建议*/
-            // if (Object.prototype.toString.call(parentNode) !== Object.prototype.toString.call(document) && node.id.indexOf('qyd_acb') > -1) {
-            //     this.setClickAc(node);
-            // }else{
-            //     this.getACBtarget(parentNode);
-            // }
-
             /* 自动埋点采集点击数据时,使用下面的建议*/
             this.setClickAc(node);
             if (Object.prototype.toString.call(parentNode) !== Object.prototype.toString.call(document) && length < this.store.acbLength) {
