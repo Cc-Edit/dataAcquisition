@@ -2,38 +2,40 @@
  * Created by xiaoqiang on 2018/8/10.
  */
 (function(){
-    $.ajax({
-        type: 'POST',
-        url: 'http://172.16.34.96:8110/logStash/get',
-        dataType: "json",
-        data: JSON.stringify({uuid:getCookie('userSha')}),
-        contentType:'application/json',
-        success: function(data){
-            if(data.isOk){
-                var list = [],
-                    acData = [];
-                try{
-                    list = JSON.parse(data.data);
-                }catch (e){
-                    alert('数据异常,请联系管理员');
-                    return
+    setInterval(function(){
+        $.ajax({
+            type: 'POST',
+            url: 'http://172.16.34.96:8110/logStash/get',
+            dataType: "json",
+            data: JSON.stringify({uuid:getCookie('userSha')}),
+            contentType:'application/json',
+            success: function(data){
+                if(data.isOk){
+                    var list = [],
+                        acData = [];
+                    try{
+                        list = JSON.parse(data.data);
+                    }catch (e){
+                        alert('数据异常,请联系管理员');
+                        return
+                    }
+                    if(list.length < 1){
+                        alert('数据异常,请联系管理员');
+                        return
+                    }
+                    list.map(function(item, index){
+                        acData = acData.concat(item.acData);
+                    });
+                    renderPage(list[0].uuid, acData)
+                }else{
+                    alert(data.msg)
                 }
-                if(list.length < 1){
-                    alert('数据异常,请联系管理员');
-                    return
-                }
-                list.map(function(item, index){
-                    acData = acData.concat(item.acData);
-                });
-                renderPage(list[0].uuid, acData)
-            }else{
-                alert(data.msg)
+            },
+            error: function (xhr, thrownError) {
+                alert('请求异常,请联系管理员')
             }
-        },
-        error: function (xhr, thrownError) {
-            alert('请求异常,请联系管理员')
-        }
-    });
+        });
+    }, 10000);
 
     function renderPage(uuid, acData) {
         var pageSize = 0,
