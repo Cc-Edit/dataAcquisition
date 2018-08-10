@@ -2,7 +2,15 @@
  * Created by xiaoqiang on 2018/8/10.
  */
 (function(){
-    setInterval(sendAjax, 10000);
+    var timer = 10;
+    setInterval(function(){
+        timer--;
+        if(timer == 0){
+            timer = 10;
+            sendAjax();
+        }
+        $('.js-time').text(timer + 's');
+    }, 1000);
 
     sendAjax();
 
