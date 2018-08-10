@@ -173,7 +173,7 @@
 		
 ### demo截图：
 采集端:
-![采集端](http://www.isjs.cn/wp-content/uploads/2013/06/2.png "采集端")
+![采集端](http://www.isjs.cn/wp-content/uploads/2013/06/2-1.png "采集端")
 
 展示端:
 ![展示端](http://www.isjs.cn/wp-content/uploads/2013/06/3.png "展示端")
