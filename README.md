@@ -9,6 +9,10 @@
 
 ![js前端架构](http://www.isjs.cn/wp-content/uploads/2013/06/2018_07_25_1136562613-1.png "关注我哟")
 
+大多数业务场景不需要用户行为数据，团队同学新开发了一套只采集前端代码异常，资源异常，接口异常的工具，
+
+并且支持npm直接安装，有需要的请移步➡️ https://github.com/justwe7/frontError
+
 ### demo：
 数据采集页面(在此页面的操作会被采集上报): [https://open.isjs.cn/demo-jquery/index.html](https://open.isjs.cn/demo-jquery/index.html)
 
