@@ -12,9 +12,9 @@
 并且支持npm直接安装，有需要的请移步➡️ https://github.com/justwe7/frontError
 
 ### demo：
-数据采集页面(在此页面的操作会被采集上报): [https://open.isjs.cn/demo-jquery/index.html](https://open.isjs.cn/demo-jquery/index.html)
+数据采集页面(在此页面的操作会被采集上报): [http://open.isjs.cn/demo-jquery/index.html](http://open.isjs.cn/demo-jquery/index.html)
 
-数据分析页面(上报的数据会在此页面展示): [https://open.isjs.cn/admin/index.html](https://open.isjs.cn/admin/index.html)
+数据分析页面(上报的数据会在此页面展示): [http://open.isjs.cn/admin/index.html](http://open.isjs.cn/admin/index.html)
 
 注: 数据上报的时机是页面跳转或者手动触发
 

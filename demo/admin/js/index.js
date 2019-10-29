@@ -17,7 +17,7 @@
     function sendAjax(){
         $.ajax({
             type: 'POST',
-            url: 'https://open.isjs.cn/logStash/get',
+            url: 'http://open.isjs.cn/logStash/get',
             dataType: "json",
             data: JSON.stringify({uuid:getCookie('userSha')}),
             contentType:'application/json',
