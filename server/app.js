@@ -34,31 +34,31 @@ app.all('/logStash/*', (req, res, next) => {
 
 app.post('/logStash/push', bodyParser.json(), (req, res) => {
     var data = req.body;
-    if(!data){
-        console.log("请求异常...");
-        res.status(200).json({ isOk:false, msg:"请求方式异常" });
-        return;
-    }
-    if(eagleConfig.fileIndex > eagleConfig.maxFileIndex){
-        console.log("文件过大...");
-        res.status(200).json({ isOk:false, msg:"文件过大,请联系管理员清除" });
-        return;
-    }
-    data.ip  = req.ip;
-    data.method = 'post';
-    try{
-        var dataStr = JSON.stringify(data);
-    }catch(e){
-        console.log("格式异常...");
-        res.status(200).json({ isOk:false, msg:"格式异常" });
-        return;
-    }
-    if(!!dataStr && (dataStr.length > eagleConfig.reqMax)){
-        console.log("数据超限...");
-        res.status(200).json({ isOk:false, msg:"数据过大,超过20k" });
-        return;
-    }
-    var logFilePath = eagleConfig.logPath +  'fe-' + data.uuid + '.json';
+if(!data){
+    console.log("请求异常...");
+    res.status(200).json({ isOk:false, msg:"请求方式异常" });
+    return;
+}
+if(eagleConfig.fileIndex > eagleConfig.maxFileIndex){
+    console.log("文件过大...");
+    res.status(200).json({ isOk:false, msg:"文件过大,请联系管理员清除" });
+    return;
+}
+data.ip  = req.ip;
+data.method = 'post';
+try{
+    var dataStr = JSON.stringify(data);
+}catch(e){
+    console.log("格式异常...");
+    res.status(200).json({ isOk:false, msg:"格式异常" });
+    return;
+}
+if(!!dataStr && (dataStr.length > eagleConfig.reqMax)){
+    console.log("数据超限...");
+    res.status(200).json({ isOk:false, msg:"数据过大,超过20k" });
+    return;
+}
+var logFilePath = eagleConfig.logPath +  'fe-' + data.uuid + '.json';
 
     // 追加数据
     fs.access(logFilePath, fs.constants.F_OK, (err) => {
@@ -102,7 +102,7 @@ app.post('/logStash/get', bodyParser.json(), (req, res) => {
 });
 
 app.listen(eagleConfig.port,() => {
-    console.log('采集服务已启动1，正在监听:%s端口。', eagleConfig.port);
+    console.log('采集服务已启动，正在监听:%s端口。', eagleConfig.port);
     if(!fs.existsSync(eagleConfig.logPath)){
         fs.mkdirSync(eagleConfig.logPath);
     }
