@@ -324,30 +324,31 @@ var dataAcquisition = {
             var storeString = this.util.getCookie(this.store.storeReqErr);
             var ACEdata = this.util.isNullOrEmpty(storeString) ? [] : JSON.parse(storeString);
             var nowStr = this.util.getTimeStr();
-
+            var resp = response;
             try{
-                var resp = JSON.parse(response);
-                if(longTime || httpError || (resp && resp.code === 10000)){
-                    var ErrorData = {
-                        type: this.store.storeReqErr,
-                        path: this.util.getCookie(this.store.storePage),
-                        sTme: nowStr,
-                        isMaster: isMaster,//是否是生产环境
-                        requrl: responseURL,
-                        method: method,
-                        readyState: _ajax.readyState,  //状态码
-                        status: status,
-                        statusText: statusText,
-                        resMs: (ready_time - send_time),
-                        textStatus: (''+response).substr(0,200)
-                    };
-                    if(this.store.openAjaxData){
-                        ErrorData.reqData = post_data;
-                    }
-                    ACEdata.push(ErrorData);
-                    this.util.setCookie(this.store.storeReqErr, JSON.stringify(ACEdata))
-                }
+                resp = JSON.parse(response);
             }catch (e) {}
+
+            if(longTime || httpError || (resp && resp.code === 10000)){
+                var ErrorData = {
+                    type: this.store.storeReqErr,
+                    path: this.util.getCookie(this.store.storePage),
+                    sTme: nowStr,
+                    isMaster: isMaster,//是否是生产环境
+                    requrl: responseURL,
+                    method: method,
+                    readyState: _ajax.readyState,  //状态码
+                    status: status,
+                    statusText: statusText,
+                    resMs: (ready_time - send_time),
+                    textStatus: (''+response).substr(0,200)
+                };
+                if(this.store.openAjaxData){
+                    ErrorData.reqData = post_data;
+                }
+                ACEdata.push(ErrorData);
+                this.util.setCookie(this.store.storeReqErr, JSON.stringify(ACEdata))
+            }
         }
     },
     setInputAc: function (e) { //输入框操作数据保存
