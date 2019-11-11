@@ -189,31 +189,30 @@ var dataAcquisition = {
     },
     bindAjaxHook: function () {//对ajax中的异常进行捕获,需将代码置于业务代码之前，对所有请求进行代理
         var _this = this;
+        var nativeAjaxOpen = XMLHttpRequest.prototype.open;
+        var nativeAjaxSend = XMLHttpRequest.prototype.send;
+        var nativeAjaxonReady = XMLHttpRequest.prototype.onreadystatechange;
         var proxyXhrObj ={
             open: function() {
                 this.method = (arguments[0] || [])[0];
+                return nativeAjaxOpen.apply(this, arguments);
             },
             send: function() {
                 this.send_time = +new Date;
                 this.post_data = (arguments[0] || [])[0] || '';
+                return nativeAjaxSend.apply(this, arguments);
             },
             onreadystatechange: function(xhr) {
                 dataAcquisition.setAjErrAc(xhr);
+                return nativeAjaxonReady.apply(this, arguments);
             }
         };
         window._ahrealxhr = window._ahrealxhr || XMLHttpRequest;
         XMLHttpRequest = function() {
             this.xhr = new window._ahrealxhr();
             for (var attr in this.xhr) {
-                var type = "";
-                try { type = typeof this.xhr[attr]; } catch (e) {}
-                if (type === "function") {
+                if ( !_this.util.isNullOrEmpty(proxyXhrObj[attr]) ) {
                     this[attr] = _this.util.hookfun(attr, proxyXhrObj);
-                } else {
-                    Object.defineProperty(this, attr, {
-                        get: _this.util.getFactory(attr, proxyXhrObj),
-                        set: _this.util.setFactory(attr, proxyXhrObj)
-                    });
                 }
             }
         };
