@@ -212,7 +212,7 @@ var dataAcquisition = {
             this.xhr = new window._ahrealxhr();
             for (var attr in this.xhr) {
                 if ( !_this.util.isNullOrEmpty(proxyXhrObj[attr]) ) {
-                    this[attr] = _this.util.hookfun(attr, proxyXhrObj);
+                    this[attr] = proxyXhrObj[attr];
                 }
             }
         };
