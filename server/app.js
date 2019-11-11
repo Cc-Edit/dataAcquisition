@@ -102,7 +102,7 @@ app.post('/logStash/get', bodyParser.json(), (req, res) => {
 });
 
 app.listen(eagleConfig.port,() => {
-    console.log('采集服务已启动1，正在监听:%s端口。', eagleConfig.port);
+    console.log('采集服务已启动12，正在监听:%s端口。', eagleConfig.port);
     if(!fs.existsSync(eagleConfig.logPath)){
         fs.mkdirSync(eagleConfig.logPath);
     }
