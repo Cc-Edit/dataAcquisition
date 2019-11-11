@@ -3,7 +3,7 @@
  */
 var dataAcquisition = {
     store:{ //配置项
-        storeVer     : '1.0.2',     //版本号
+        storeVer     : '1.0.3',     //版本号
         storeInput   : "ACINPUT",   //输入采集标记
         storePage    : "ACPAGE",    //页面采集标记
         storeClick   : "ACCLIK",    //点击事件采集标记
@@ -82,44 +82,6 @@ var dataAcquisition = {
             now += date.getMinutes() + ":";
             now += date.getSeconds() + "";
             return now;
-        },
-        getFactory: function (attr, proxy) {
-            return function() {
-                var v = this.hasOwnProperty(attr + "_")
-                  ? this[attr + "_"]
-                  : this.xhr[attr];
-                var attrGetterHook = (proxy[attr] || {})["getter"];
-                return (attrGetterHook && attrGetterHook(v, this)) || v;
-            };
-        },
-        setFactory: function (attr, proxy) {
-            return function(v) {
-                var xhr = this.xhr;
-                var that = this;
-                var hook = proxy[attr];
-                if (typeof hook === "function") {
-                    xhr[attr] = function() {
-                        proxy[attr](that) || v.apply(xhr, arguments);
-                    };
-                } else {
-                    var attrSetterHook = (hook || {})["setter"];
-                    v = (attrSetterHook && attrSetterHook(v, that)) || v;
-                    try {
-                        xhr[attr] = v;
-                    } catch (e) {
-                        this[attr + "_"] = v;
-                    }
-                }
-            };
-        },
-        hookfun: function (fun, proxy) {
-            return function() {
-                var args = [].slice.call(arguments);
-                if (proxy[fun] && proxy[fun].call(this, args, this.xhr)) {
-                    return;
-                }
-                return this.xhr[fun].apply(this.xhr, args);
-            };
         }
     },
     init: function () {
