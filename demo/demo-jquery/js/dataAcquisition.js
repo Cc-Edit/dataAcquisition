@@ -188,7 +188,6 @@ var dataAcquisition = {
         return this;
     },
     bindAjaxHook: function () {//对ajax中的异常进行捕获,需将代码置于业务代码之前，对所有请求进行代理
-        var _this = this;
         var nativeAjaxOpen = XMLHttpRequest.prototype.open;
         var nativeAjaxSend = XMLHttpRequest.prototype.send;
         var nativeAjaxonReady = XMLHttpRequest.onreadystatechange;
@@ -200,22 +199,21 @@ var dataAcquisition = {
             send: function() {
                 this.send_time = +new Date;
                 this.post_data = (arguments[0] || [])[0] || '';
+
+                this.addEventListener('error', function (e) {
+                    dataAcquisition.setAjErrAc(e.target);
+                });
+
+                this.onreadystatechange = function (xhr) {
+                    dataAcquisition.setAjErrAc(xhr);
+                    nativeAjaxonReady && nativeAjaxonReady.apply(this, arguments);
+                };
+
                 return (nativeAjaxSend && nativeAjaxSend.apply(this, arguments));
-            },
-            onreadystatechange: function(xhr) {
-                dataAcquisition.setAjErrAc(xhr);
-                return (nativeAjaxonReady && nativeAjaxonReady.apply(this, arguments));
             }
         };
-        window._ahrealxhr = window._ahrealxhr || XMLHttpRequest;
-        XMLHttpRequest = function() {
-            this.xhr = new window._ahrealxhr();
-            for (var attr in this.xhr) {
-                if ( !_this.util.isNullOrEmpty(proxyXhrObj[attr]) ) {
-                    this[attr] = proxyXhrObj[attr];
-                }
-            }
-        };
+        XMLHttpRequest.prototype.open = proxyXhrObj.open;
+        XMLHttpRequest.prototype.send = proxyXhrObj.send;
     },
     bindCodeHook: function () {
         var _this = this;
