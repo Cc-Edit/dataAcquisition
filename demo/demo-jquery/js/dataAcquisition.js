@@ -188,6 +188,7 @@ var dataAcquisition = {
         return this;
     },
     bindAjaxHook: function () {//对ajax中的异常进行捕获,需将代码置于业务代码之前，对所有请求进行代理
+        var _this = this;
         var proxyXhrObj ={
             open: function() {
                 this.method = (arguments[0] || [])[0];
@@ -202,7 +203,6 @@ var dataAcquisition = {
         };
         window._ahrealxhr = window._ahrealxhr || XMLHttpRequest;
         XMLHttpRequest = function() {
-            var _this = this;
             this.xhr = new window._ahrealxhr();
             for (var attr in this.xhr) {
                 var type = "";
