@@ -123,7 +123,7 @@ var dataAcquisition = {
         }
     },
     init: function () {
-        var _this = this, _ACIDoms = document.querySelector(this.store.selector);
+        var _this = this, _ACIDoms = document.querySelectorAll(this.store.selector);
 
         this.store.useStorage = (typeof window.localStorage != 'undefined');
         this.util.setCookie(this.store.storePage, window.location.pathname);
