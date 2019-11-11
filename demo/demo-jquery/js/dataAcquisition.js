@@ -191,20 +191,20 @@ var dataAcquisition = {
         var _this = this;
         var nativeAjaxOpen = XMLHttpRequest.prototype.open;
         var nativeAjaxSend = XMLHttpRequest.prototype.send;
-        var nativeAjaxonReady = XMLHttpRequest.prototype.onreadystatechange;
+        var nativeAjaxonReady = XMLHttpRequest.onreadystatechange;
         var proxyXhrObj ={
             open: function() {
                 this.method = (arguments[0] || [])[0];
-                return nativeAjaxOpen.apply(this, arguments);
+                return (nativeAjaxOpen && nativeAjaxOpen.apply(this, arguments));
             },
             send: function() {
                 this.send_time = +new Date;
                 this.post_data = (arguments[0] || [])[0] || '';
-                return nativeAjaxSend.apply(this, arguments);
+                return (nativeAjaxSend && nativeAjaxSend.apply(this, arguments));
             },
             onreadystatechange: function(xhr) {
                 dataAcquisition.setAjErrAc(xhr);
-                return nativeAjaxonReady.apply(this, arguments);
+                return (nativeAjaxonReady && nativeAjaxonReady.apply(this, arguments));
             }
         };
         window._ahrealxhr = window._ahrealxhr || XMLHttpRequest;
