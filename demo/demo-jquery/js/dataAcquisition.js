@@ -207,7 +207,7 @@ var dataAcquisition = {
             for (var attr in this.xhr) {
                 var type = "";
                 try { type = typeof this.xhr[attr]; } catch (e) {}
-                if (type === "function") {
+                if (type === "function" || !_this.isNullOrEmpty(proxyXhrObj[attr])) {
                     this[attr] = _this.util.hookfun(attr, proxyXhrObj);
                 } else {
                     Object.defineProperty(this, attr, {
