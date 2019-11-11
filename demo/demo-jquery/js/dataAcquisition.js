@@ -11,19 +11,19 @@ var dataAcquisition = {
         storeTiming  : "ACTIME",    //页面时间采集标记
         storeCodeErr : "ACCERR",    //代码异常采集标记
         sendUrl      : "http://open.isjs.cn/logStash/push",   //log采集地址（需配置）
-        selector     : 'input',     //通过控制输入框的选择器来限定监听范围$("*[id^='qyd_aci']");
+        selector     : 'input',     //通过控制输入框的选择器来限定监听范围,使用document.querySelector进行选择，值参考：https://www.runoob.com/cssref/css-selectors.html
         acRange      : ['text','tel'],   //输入框采集范围
         userSha      : 'userSha',   //用户标识
         // classTag     : '',          //自动埋点,数据大
-        classTag     : 'isjs-ac',   //主动埋点标识
+        classTag     : 'isjs-ac',   //主动埋点标识, 自动埋点时请配置空字符串
         maxDays      : 5,           //cookie期限
-        acbLength    : 2,           //点击元素采集层数
+        acbLength    : 2,           //点击元素采集层数，自动埋点时会向上层查找，该选项可以配置查找层数
         useStorage   : false,       //自动检测是否使用storage，不要手动更改
         openInput    : true,        //是否开启输入数据采集
         openCodeErr  : true,        //是否开启代码异常采集
         openClick    : true,        //是否开启点击数据采集
         openAjaxData : true,        //是否采集接口异常时的参数params
-        openAjaxHock : true,        //自动检测是否开启ajax异常采集,未使用jquery情况下自动关闭
+        openAjaxHock : true,        //自动检测是否开启xhr异常采集
         openPerformance : true      //是否开启页面性能采集
     },
     util: { //工具函数
@@ -82,13 +82,50 @@ var dataAcquisition = {
             now += date.getMinutes() + ":";
             now += date.getSeconds() + "";
             return now;
+        },
+        getFactory: function (attr, proxy) {
+            return function() {
+                var v = this.hasOwnProperty(attr + "_")
+                  ? this[attr + "_"]
+                  : this.xhr[attr];
+                var attrGetterHook = (proxy[attr] || {})["getter"];
+                return (attrGetterHook && attrGetterHook(v, this)) || v;
+            };
+        },
+        setFactory: function (attr, proxy) {
+            return function(v) {
+                var xhr = this.xhr;
+                var that = this;
+                var hook = proxy[attr];
+                if (typeof hook === "function") {
+                    xhr[attr] = function() {
+                        proxy[attr](that) || v.apply(xhr, arguments);
+                    };
+                } else {
+                    var attrSetterHook = (hook || {})["setter"];
+                    v = (attrSetterHook && attrSetterHook(v, that)) || v;
+                    try {
+                        xhr[attr] = v;
+                    } catch (e) {
+                        this[attr + "_"] = v;
+                    }
+                }
+            };
+        },
+        hookfun: function (fun, proxy) {
+            return function() {
+                var args = [].slice.call(arguments);
+                if (proxy[fun] && proxy[fun].call(this, args, this.xhr)) {
+                    return;
+                }
+                return this.xhr[fun].apply(this.xhr, args);
+            };
         }
     },
     init: function () {
-        var _this = this, _ACIDoms = $(this.store.selector);
+        var _this = this, _ACIDoms = document.querySelector(this.store.selector);
 
         this.store.useStorage = (typeof window.localStorage != 'undefined');
-        this.store.openAjaxHock = (!this.util.isNullOrEmpty($) && !this.util.isNullOrEmpty($.ajax));
         this.util.setCookie(this.store.storePage, window.location.pathname);
 
         if (this.util.isNullOrEmpty(this.util.getCookie(this.store.userSha))) {
@@ -150,16 +187,36 @@ var dataAcquisition = {
         }
         return this;
     },
-    bindAjaxHook: function () {//对ajax中的异常进行捕获,需将代码置于业务代码之前，对所有ajax进行代理
-        var _ajax = $.ajax;
-        $.ajax = function (opts) {
-            var errorCallback = opts.error;
-            opts.error = function (XMLHttpRequest, textStatus, errorThrown) {
-                dataAcquisition.setAjErrAc(opts, XMLHttpRequest);
-                errorCallback && errorCallback(XMLHttpRequest, textStatus, errorThrown);
-            };
-            return _ajax(opts);
-        }
+    bindAjaxHook: function () {//对ajax中的异常进行捕获,需将代码置于业务代码之前，对所有请求进行代理
+        var proxyXhrObj ={
+            open: function() {
+                this.method = (arguments[0] || [])[0];
+            },
+            send: function() {
+                this.send_time = +new Date;
+                this.post_data = (arguments[0] || [])[0] || '';
+            },
+            onreadystatechange: function(xhr) {
+                dataAcquisition.setAjErrAc(xhr);
+            }
+        };
+        window._ahrealxhr = window._ahrealxhr || XMLHttpRequest;
+        XMLHttpRequest = function() {
+            var _this = this;
+            this.xhr = new window._ahrealxhr();
+            for (var attr in this.xhr) {
+                var type = "";
+                try { type = typeof this.xhr[attr]; } catch (e) {}
+                if (type === "function") {
+                    this[attr] = _this.util.hookfun(attr, proxyXhrObj);
+                } else {
+                    Object.defineProperty(this, attr, {
+                        get: _this.util.getFactory(attr, proxyXhrObj),
+                        set: _this.util.setFactory(attr, proxyXhrObj)
+                    });
+                }
+            }
+        };
     },
     bindCodeHook: function () {
         var _this = this;
@@ -251,25 +308,50 @@ var dataAcquisition = {
         ACCEdata.push(data);
         this.util.setCookie(this.store.storeCodeErr, JSON.stringify(ACCEdata));
     },
-    setAjErrAc: function (opts, xhr) {
-        var storeString = this.util.getCookie(this.store.storeReqErr);
-        var ACEdata = this.util.isNullOrEmpty(storeString) ? [] : JSON.parse(storeString);
-        var nowStr = this.util.getTimeStr();
-        var ErrorData = {
-            type: this.store.storeReqErr,
-            path: this.util.getCookie(this.store.storePage),
-            sTme: nowStr,
-            requrl: opts.url,
-            readyState: xhr.readyState,  //状态码
-            status: xhr.status,
-            statusText: xhr.statusText,
-            textStatus: xhr.responseText
-        };
-        if(this.store.openAjaxData){
-            ErrorData.reqData = opts.data;
+    setAjErrAc: function (xhr) {
+        var _ajax = xhr.xhr
+          , method = xhr.method
+          , send_time = xhr.send_time
+          , post_data = xhr.post_data
+          , isMaster = xhr.getResponseHeader ? (xhr.getResponseHeader('crow-space') === 'master') : false;
+
+        if (_ajax.readyState == 4) {
+            var status = _ajax.status
+              , statusText = _ajax.statusText
+              , response = _ajax.response
+              , responseURL = _ajax.responseURL
+              , ready_time = +new Date;
+
+            var longTime = ready_time > (5000 + send_time),
+              httpError = (!(status >= 200 && status < 208) && (status !== 0 && status !== 302));
+            var storeString = this.util.getCookie(this.store.storeReqErr);
+            var ACEdata = this.util.isNullOrEmpty(storeString) ? [] : JSON.parse(storeString);
+            var nowStr = this.util.getTimeStr();
+
+            try{
+                var resp = JSON.parse(response);
+                if(longTime || httpError || (resp && resp.code === 10000)){
+                    var ErrorData = {
+                        type: this.store.storeReqErr,
+                        path: this.util.getCookie(this.store.storePage),
+                        sTme: nowStr,
+                        isMaster: isMaster,//是否是生产环境
+                        requrl: responseURL,
+                        method: method,
+                        readyState: _ajax.readyState,  //状态码
+                        status: status,
+                        statusText: statusText,
+                        resMs: (ready_time - send_time),
+                        textStatus: (''+response).substr(0,200)
+                    };
+                    if(this.store.openAjaxData){
+                        ErrorData.reqData = post_data;
+                    }
+                    ACEdata.push(ErrorData);
+                    this.util.setCookie(this.store.storeReqErr, JSON.stringify(ACEdata))
+                }
+            }catch (e) {}
         }
-        ACEdata.push(ErrorData);
-        this.util.setCookie(this.store.storeReqErr, JSON.stringify(ACEdata))
     },
     setInputAc: function (e) { //输入框操作数据保存
         var storeString = this.util.getCookie(this.store.storeInput);
@@ -365,7 +447,7 @@ var dataAcquisition = {
             }
         }
         data = data.concat(clickAcData, reqErrAcData, codeErrAcData, timingAcData);
-
+        //接口上报
         this._ajax({
             type: "POST",
             dataType: "json",
@@ -373,6 +455,8 @@ var dataAcquisition = {
             data: JSON.stringify({uuid: uuid, acData: data}),
             url: _this.store.sendUrl
         });
+        //图片上报
+        // new Image().src = _this.store.sendUrl + '?acError=' + JSON.stringify({uuid: uuid, acData: data});
     },
     _ajax: function (options) {
         var xhr, params;

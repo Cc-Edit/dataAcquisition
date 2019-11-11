@@ -31,14 +31,19 @@
 ### 使用方式：
 1. clone代码到本地
 2. 修改store.sendUrl为上报接口地址
-3. 修改store.selector输入元素选择器，指定固定id为主动埋点，指定tagName为自动埋点
+3. 修改store.selector输入元素选择器，用来指定输入事件监听范围
 4. 如需对输入采集进行过滤，可更改store.acRange来指定，password最好不要进行采集。此处只为示例。
 5. 点击元素默认向上冒泡采集两层，可修改store.acbLength来更改采集层数
 6. 将文件放置在逻辑代码加载之前（支持AMD）
 7. server目录下为基于Node.js开发的采集数据接收端
 
-### 依赖：
-1. jQuery (openAjaxData 开启时依赖)
+### 主动埋点/自动埋点
+只需修改classTag配置即可实现两种采集方式。
+classTag为空时 采集所有元素
+classTag有值时，只会采集class中包含该值的元素
+
+### 手动数据上报
+调用 window.dataAc.postData() 即可
 
 ### 日志：
 2017-04-03 - 实现基本页面访问数据上报
@@ -75,6 +80,11 @@
 
 2018-08-24 - 增加server端代码,使项目可在本地运行
 
+版本升级：1.0.3
+
+2019-11-11 - 取消对jquery的依赖，包括选择器、请求拦截器
+2019-11-11 - 增加图片数据上报方式
+
 ### 可配置参数：
         sendUrl      : "http://localhost:9090/logStash/push",   //log采集地址
         selector     : 'input',     //配置输入框的选择器来限定input.focus.blur事件监听范围;
@@ -88,6 +98,9 @@
         openAjaxData : 'true',      //是否采集异常请求的params(注意隐私数据的保护)
         openPerformance : 'true',   //是否开启页面性能采集
         acblength    : 2,           //点击元素采集层数.层数越深数据越大
+
+
+
 
 ### 参数介绍：
 #### sendUrl
