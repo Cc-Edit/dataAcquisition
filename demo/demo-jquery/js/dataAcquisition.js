@@ -205,7 +205,7 @@ var dataAcquisition = {
                 });
 
                 this.onreadystatechange = function (xhr) {
-                    dataAcquisition.setAjErrAc(xhr);
+                    dataAcquisition.setAjErrAc(xhr.target);
                     nativeAjaxonReady && nativeAjaxonReady.apply(this, arguments);
                 };
 
@@ -306,7 +306,7 @@ var dataAcquisition = {
         this.util.setCookie(this.store.storeCodeErr, JSON.stringify(ACCEdata));
     },
     setAjErrAc: function (xhr) {
-        var _ajax = xhr.xhr
+        var _ajax = xhr
           , method = xhr.method
           , send_time = xhr.send_time
           , post_data = xhr.post_data
