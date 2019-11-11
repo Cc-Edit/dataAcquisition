@@ -1,0 +1,12 @@
+{
+  "apps": {
+    "name": "dataAc",
+    "script": "./app.js",
+    "watch": true,
+    "ignore_watch": [
+      "node_modules",
+      "weblog"
+    ],
+    "autorestart": true
+  }
+}
