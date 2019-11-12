@@ -103,16 +103,17 @@ classTag有值时，只会采集class中包含该值的元素
     与之搭配的后台接口,可以用node写一个接收端来写日志.
     注意:该接口最好不要阻塞,以免影响页面响应.
 #### selector
-    selector选项用来控制输入框input.focus.blur事件的采集范围,其实就是一个jquery的选择器
-    默认的"input"  等同于 $("input")
-    例子:"*[id^='qyd_aci']" 等同于 $("*[id^='qyd_aci']"),将会选择指定id的input标签进行采集.
-    只需要对需要采集的元素添加一个符合条件的ID属性即可:<input id="qyd_aci_0001" />
+    selector选项用来控制输入框input.focus.blur事件的采集范围。
+    其实就是一个document.querySelectorAll的选择器,
+    值参考：https://www.runoob.com/cssref/css-selectors.html
+    
     可以通过指定id实现主动埋点的功能.
 #### acRange
     此条件用来控制输入框的采集范围,与 selector 选项功能一致,但优先级低于 selector 选项
     注意,尽量不要采集type类型为password的元素内容,以免信息泄露
 #### classTag
-    全量采集情况下,使用此条件做点击元素的过滤,避免数据过大
+    用来实现主动埋点，会验证元素class是否包含指定标记
+    只需要对需要采集的元素:<input class="qyd_aci_0001" />设置classTag为 qyd_aci
 #### userSha
     用户uuid在浏览器中保存的key,有冲突时可以手动修改
 #### maxDays
