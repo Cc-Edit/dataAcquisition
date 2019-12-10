@@ -32,9 +32,9 @@ Display data page(The reported data will be displayed on this page):
 2. Modify store.sendurl to submit interface address    
 3. Modify the store.selector input element selector to specify the input event listening range    
 4. If you want to filter the input collection, you can change store.acrange to specify, and password is better not to collect. Here is an example only     
-5. 点击元素默认向上冒泡采集两层，可修改store.acbLength来更改采集层数
-6. 将文件放置在逻辑代码加载之前（支持AMD）
-7. server目录下为基于Node.js开发的采集数据接收端
+5. Click the element to bubble up and collect two layers by default. You can modify store.acblength to change the number of layers
+6. Place file before logical code load (AMD supported)
+7. The server directory is the collection data receiver developed based on node.js
 
 ### Active burying / automatic burying
 Only need to modify the classTag configuration to realize the two collection methods.    
