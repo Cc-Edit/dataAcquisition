@@ -20,7 +20,7 @@ Display data page(The reported data will be displayed on this page):
 
 
 ### Target：
-1. Realize front-end data reporting and analysis    
+1. Realize front-end data reporting and analysis     
 2. Realize user data portrait modeling and behavior trace analysis    
 3. Realize active burying point and automatic burying point reporting   
 4. Achieve front-end page loading speed reporting    
@@ -28,7 +28,7 @@ Display data page(The reported data will be displayed on this page):
 6. Implementation of front-end code exception reporting      
 
 ### Usage：
-1. Clone code to local     
+1. Clone code to local      
 2. Modify store.sendurl to submit interface address    
 3. Modify the store.selector input element selector to specify the input event listening range    
 4. If you want to filter the input collection, you can change store.acrange to specify, and password is better not to collect. Here is an example only     
