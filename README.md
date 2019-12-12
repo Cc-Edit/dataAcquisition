@@ -5,9 +5,9 @@ dataAcquisition.js is a collect what happens to the user on the web page behavio
 ### [中文文档戳这里](https://github.com/adminV/dataAcquisition/blob/master/README-CN.md)  
 
 ### Tips：
-Everyone has any needs or dissatisfaction in the use process        
+Everyone has any needs or dissatisfaction in the use process          
 You can give me pull requests     
-If it helps you, please give me a star
+If it helps you, please give me a star     
 
 
 ### demo：
