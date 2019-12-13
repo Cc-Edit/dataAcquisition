@@ -11,11 +11,11 @@ If it helps you, please give me a star
 
 
 ### demo：
-Data collection page(Operations on this page will be collected and reported):     
+Data collection page(Operations on this page will be collected and reported):        
 [http://open.isjs.cn/demo-jquery/index.html](http://open.isjs.cn/demo-jquery/index.html)
 
 
-Display data page(The reported data will be displayed on this page):     
+Display data page(The reported data will be displayed on this page):        
 [http://open.isjs.cn/admin/index.html](http://open.isjs.cn/admin/index.html)
 
 
