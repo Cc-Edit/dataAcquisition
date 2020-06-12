@@ -2,10 +2,13 @@
 
 ### 公告：
 大家在使用过程中有任何需求，或者有不满意的点都可以提交上来。
+此插件已开始支持Vuejs环境下使用，配置更丰富，功能更强大，使用更简单: [Vue-dataAc](https://github.com/adminV/Vue-dataAc)
 
-欢迎关注我的公众号: **js前端架构**
 
-![js前端架构](http://www.isjs.cn/wp-content/uploads/2013/06/2018_07_25_1136562613-1.png "关注我哟")
+| 公众号: **js前端架构** | 打赏 :confetti_ball: | 
+| :------------: |:---------------:| 
+|![js前端架构](http://www.isjs.cn/wp-content/uploads/2013/06/2018_07_25_1136562613-1.png "关注我哟")|![打赏](http://www.isjs.cn/wp-content/uploads/2020/06/Wechat-z.png "感谢")|
+
 
 ### demo：
 数据采集页面(在此页面的操作会被采集上报): [http://open.isjs.cn/demo-jquery/index.html](http://open.isjs.cn/demo-jquery/index.html)

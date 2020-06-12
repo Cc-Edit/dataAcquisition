@@ -3,6 +3,7 @@
 dataAcquisition.js is a collect what happens to the user on the web page behavior and abnormal data usage
 
 ### [中文文档戳这里](https://github.com/adminV/dataAcquisition/blob/master/README-CN.md)  
+### [Support for Vue.js](https://github.com/adminV/Vue-dataAc)
 
 ### Tips：
 Everyone has any needs or dissatisfaction in the use process          
