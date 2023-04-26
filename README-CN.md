@@ -5,9 +5,10 @@
 此插件已开始支持Vuejs环境下使用，配置更丰富，功能更强大，使用更简单: [Vue-dataAc](https://github.com/adminV/Vue-dataAc)
 
 
-| 公众号: **js前端架构** | 打赏 :confetti_ball: | 
-| :------------: |:---------------:| 
-|![js前端架构](http://www.isjs.cn/wp-content/uploads/2013/06/2018_07_25_1136562613-1.png "关注我哟")|![打赏](http://www.isjs.cn/wp-content/uploads/2020/06/Wechat-z.png "感谢")|
+|                                     WeChat🍻                                      |                                                打赏 :confetti_ball:                                                 | 
+|:-------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------------------------------:| 
+| ![wechat.png](https://github.com/Cc-Edit/CcClip/blob/master/public/user/wechat.png) | ![img.png](https://github.com/Cc-Edit/CcClip/blob/master/public/user/img.png) |
+
 
 
 ### demo：
