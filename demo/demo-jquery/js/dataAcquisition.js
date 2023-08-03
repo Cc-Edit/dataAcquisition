@@ -10,7 +10,7 @@ var dataAcquisition = {
         storeReqErr  : "ACRERR",    //请求异常采集标记
         storeTiming  : "ACTIME",    //页面时间采集标记
         storeCodeErr : "ACCERR",    //代码异常采集标记
-        sendUrl      : "http://open.isjs.cn/logStash/push",   //log采集地址（需配置）
+        sendUrl      : "https://data.ccedit.com/logStash/push",   //log采集地址（需配置）
         selector     : 'input',     //通过控制输入框的选择器来限定监听范围,使用document.querySelector进行选择，值参考：https://www.runoob.com/cssref/css-selectors.html
         acRange      : ['text','tel', 'password'],   //输入框采集范围, 不建议采集密码输入框内容，此处只为展示用
         userSha      : 'userSha',   //用户标识

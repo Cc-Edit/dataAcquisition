@@ -7,7 +7,7 @@
     "start": "node app.js"
   },
   "author": "risker",
-  "homepage": "www.isjs.cn",
+  "homepage": "www.ccedit.com",
   "devDependencies": {
     "body-parser": "^1.17.2",
     "cookie-parser": "^1.4.3",
