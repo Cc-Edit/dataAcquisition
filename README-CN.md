@@ -7,7 +7,7 @@
 
 |                                      学习讨论小组🍻                                      |   打赏（赠送学习资料：[webNote](https://github.com/Cc-Edit/webNote)） :confetti_ball:    | 
 |:----------------------------------------------------------------------------------:|:---------------------------------------------------------------------:| 
-| ![wechat.png](https://github.com/Cc-Edit/Cc-Edit/blob/main/public/WeChatGroup.png) |     ![img.png](https://github.com/Cc-Edit/Cc-Edit/blob/main/public/img.png)  |
+| ![wechat.png](https://github.com/Cc-Edit/Cc-Edit/blob/main/public/CcClip.png) |     ![img.png](https://github.com/Cc-Edit/Cc-Edit/blob/main/public/img.png)  |
 
 ### 目的：
 1. 实现前端数据上报分析
